@@ -4,12 +4,21 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ProSidebarProvider } from 'react-pro-sidebar';
 
 
 const App = () => {
   return (
     <>
-        <h1>Blog App</h1>
+        <ToastContainer />
+        <ProSidebarProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </ProSidebarProvider>
     </>
   );
 }
