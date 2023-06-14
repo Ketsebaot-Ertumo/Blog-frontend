@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 
 
 
+
 const pages = ['Home', 'Log In'];
 
 const Navbar = () => {
@@ -50,7 +51,6 @@ const Navbar = () => {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
@@ -126,7 +126,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/images/avatar/2.jpg" />
+                <Avatar alt="Ketsi" src="" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -135,8 +135,8 @@ const Navbar = () => {
                     "& .MUIMenu-list":{
                         bgcolor: "primary.white",
                         color: "white"
-                    },
-                }
+                      },
+                  }
               }}
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -167,7 +167,7 @@ const Navbar = () => {
               </MenuItem>
 
               <MenuItem>
-                <Typography textAlign="center" color='#8e67b2'>Log Out</Typography>
+                <Typography textAlign="center" >Log Out</Typography>
               </MenuItem>
 
               <MenuItem onClick={handleCloseUserMenu}>

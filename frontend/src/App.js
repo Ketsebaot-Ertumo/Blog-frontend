@@ -5,6 +5,9 @@ import NotFound from './pages/NotFound';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ProSidebarProvider } from 'react-pro-sidebar';
+import Register from './pages/Register'
+import LogIn from './pages/LogIn'
+import Singlepost from './pages/Singlepost'
 
 
 const App = () => {

@@ -1,12 +1,25 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-
+import Footer from "../components/Footer";
+import { Box, Container, Grid } from "@mui/material";
+import PostCard from "../components/PostCard";
 
 const Home= () =>{
     return(
         <>
-        <Navbar />
-        <h1>Home Page</h1>
+            <Box sx={{bgcolor: 'efafafa', minHeight: '100vh'}}>
+
+                <Navbar />
+                    <Container sx={{pt: 5, pb: 5, minHeight: '83vh'}}>
+                        <Box sx={{flexGrow: 1}}>
+                            <Grid Container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
+                                <PostCard />
+                            </Grid>
+                        </Box>
+                    </Container>
+                <Footer />
+
+            </Box>
         </>
     )
 }
