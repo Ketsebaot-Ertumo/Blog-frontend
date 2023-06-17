@@ -18,7 +18,7 @@ import Layout from './admin/global/Layout';
 
 
 //HOC
-const AdminDashboardHOC = Layout(AdminDashboard)
+const AdminDashboardHOC = Layout(AdminDashboard);
 
 const App = () => {
   return (
@@ -30,7 +30,7 @@ const App = () => {
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/login' element={<LogIn />} />
-                <Route path='/admin/dashboard' element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+                <Route path='/admin/dashboard' element={<AdminRoute><AdminDashboardHOC /></AdminRoute>} />
                 <Route path='/admin/post/create' element={<AdminRoute><CreatePost /></AdminRoute>} />
                 <Route path='/admin/post/edit:id' element={<AdminRoute><EditPost /></AdminRoute>} />
                 <Route path='*' element={<NotFound />} />

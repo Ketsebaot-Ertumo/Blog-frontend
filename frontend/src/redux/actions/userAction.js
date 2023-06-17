@@ -4,21 +4,22 @@ import { USER_LOAD_FAIL, USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOGOUT_FAIL,
 import axios from 'axios';
 import { date } from "yup";
 
+
 //sign up action
 export const userSignUpAction = (user) => async(dispatch) =>{
     dispatch({type: USER_SIGNUP_REQUEST});
     try{
-        const {data} = await  axios.post('/api/signup', user)
-        dispatch[{
+        const {data} = await  axios.post('/api/signup', user);
+        dispatch({
             type: USER_SIGNUP_SUCCESS,
             payload: data
-        }];
+        });
         toast.success("Register Successfully");
     }catch(error){
-        dispatch[{
+        dispatch({
             type: USER_SIGNUP_FAIL,
             payload: error.response.data.error
-        }];
+        });
         toast.error(error.response.data.error);
     }
 }
