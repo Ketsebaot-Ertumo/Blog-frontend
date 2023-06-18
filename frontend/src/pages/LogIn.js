@@ -35,6 +35,7 @@ const LogIn= () =>{
             }else{
                 navigate('/user/dashboard');
              } }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated])
 
     const formik= useFormik({
