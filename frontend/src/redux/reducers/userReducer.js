@@ -1,10 +1,10 @@
-import { useState } from "react";
+
 import { USER_SIGNUP_REQUEST, USER_SIGNUP_FAIL, USER_SIGNUP_RESET, 
     USER_SIGNUP_SUCCESS, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, 
     USER_SIGNIN_FAIL, USER_SIGNIN_RESET, USER_LOAD_FAIL, USER_LOAD_RESET, USER_LOAD_SUCCESS, USER_LOAD_REQUEST, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_LOGOUT_FAIL, USER_LOGOUT_RESET } from "../constants/userConstants";
 
 //sign up
-export const userReducerSignUp =(State={}, action) => {
+export const userReducerSignUp =(state={}, action) => {
     switch (action.type) {
         case USER_SIGNUP_REQUEST:
             return{
@@ -23,16 +23,17 @@ export const userReducerSignUp =(State={}, action) => {
             return{}
 
         default:
-           return State;
+           return state;
     }
 }
 
 //sign in
-export const userReducerSignIn =(State={}, action) => {
+export const userReducerSignIn =(state={}, action) => {
     switch (action.type) {
         case USER_SIGNIN_REQUEST:
             return{
-                loading: true, userInfo: null, 
+                loading: true, 
+                userInfo: null, 
                 isAuthenticated: false}
         case USER_SIGNIN_SUCCESS:
             return{
@@ -51,12 +52,12 @@ export const userReducerSignIn =(State={}, action) => {
             return{}
             
         default:
-           return State;
+           return state;
     }
 }
 
 //user profile
-export const userReducerProfile =(State={user: null}, action) => {
+export const userReducerProfile =(state={user: null}, action) => {
     switch (action.type) {
         case USER_LOAD_REQUEST:
             return{
@@ -76,12 +77,12 @@ export const userReducerProfile =(State={user: null}, action) => {
             return{}
             
         default:
-           return State;
+           return state;
     }
 }
 
 //log out
-export const userReducerLogout =(State={}, action) => {
+export const userReducerLogout =(state={}, action) => {
     switch (action.type) {
         case USER_LOGOUT_REQUEST:
             return{ loading: true }
@@ -96,7 +97,7 @@ export const userReducerLogout =(State={}, action) => {
         case USER_LOGOUT_RESET:
             return{}
         default:
-           return State;
+           return state;
     }
 }
 

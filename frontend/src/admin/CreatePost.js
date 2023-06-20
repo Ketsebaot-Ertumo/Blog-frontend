@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, TextField,Typography} from "@mui/material";
+import { Box, Button, TextField, Typography} from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import Dropzone from 'react-dropzone';
@@ -9,6 +9,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { modules } from "../components/moduleToolbar";
 import { create } from "@mui/material/styles/createTransitions";
+import { toast } from "react-toastify";
 
 
 const validationSchema =yup.object({
@@ -20,7 +21,7 @@ const validationSchema =yup.object({
         .string('Add text content')
         .min(10, 'Text content should have minimum of 10 char.s')
         .required('text content is required'),
-})
+});
 
 const CreatePost = () => {
 
@@ -40,12 +41,22 @@ const CreatePost = () => {
 
             validationSchema : validationSchema,
             onSubmit: (values, actions) => {
-                    //createNewPost(values, actions);
-                    alert(JSON.stringify(values, null, 2));
+                    createNewPost(values, actions);
+                    //alert(JSON.stringify(values, null, 2));
                     actions.resetForm();
 
             }
         });
+
+        const createNewPost = async(values) => {
+            try{
+                const {data} = await axios.post('api/post/create', values);
+                toast.success('post created');
+            }catch(error){
+                console.log(error);
+                toast.error(error);
+            }
+        }
 
     return(
         <>
@@ -117,7 +128,7 @@ const CreatePost = () => {
 
                                    <>
                                       <Box sx={{display: "flex", justifyContent: 'space-around', alignItem: 'center'}}>
-                                        <Box><img style={{maxWidth: '100px'}} src={useFormik.values.image} alt='' /></Box>
+                                        <Box><img style={{maxWidth: '100px'}} src={values.image} alt='' /></Box>
                                       </Box>  
                                    </>
                                 }

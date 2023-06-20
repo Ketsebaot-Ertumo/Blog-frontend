@@ -33,7 +33,7 @@ const SidebarAdm = () => {
     return(
         <>
             <Sidebar backgroundColor="white" style={{boarderRightStyle: "none"}}>
-                <Box sx={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height:'20px'}}>
+                <Box sx={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height:'40px'}}>
                     <Box sx={{pt:4}}>
                         <Menu 
                             menuItemStyles={{

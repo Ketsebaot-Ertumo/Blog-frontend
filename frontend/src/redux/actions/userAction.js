@@ -2,7 +2,6 @@ import { toast } from "react-toastify";
 import { USER_LOAD_FAIL, USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOGOUT_FAIL, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, 
     USER_SIGNUP_FAIL, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS } from "../constants/userConstants"
 import axios from 'axios';
-import { date } from "yup";
 
 
 //sign up action
@@ -29,7 +28,7 @@ export const userSignInAction = (user) => async(dispatch) =>{
     dispatch({type: USER_SIGNIN_REQUEST});
     try{
         const {data} = await  axios.post('/api/signin', user);
-        localStorage.setItem('userInfo', JSON.stringify(date));
+        localStorage.setItem('userInfo', JSON.stringify(data));
         dispatch({
             type: USER_SIGNIN_SUCCESS,
             payload: data

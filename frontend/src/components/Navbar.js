@@ -8,11 +8,11 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import HouseIcon from '@mui/icons-material/House';
 import { Link } from 'react-router-dom';
+
 
 
 
@@ -27,11 +27,12 @@ const Navbar = () => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    console.log(event.currentTarget)
+    setAnchorElUser(event.currentTarget);    //err
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    setAnchorElNav(null);                   //err
   };
 
   const handleCloseUserMenu = () => {
@@ -41,6 +42,7 @@ const Navbar = () => {
   return (
     <AppBar position="static">
       <Container>
+        {/*ptincipal menu*/}
         <Toolbar disableGutters>
           <HouseIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -67,8 +69,9 @@ const Navbar = () => {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={handleOpenNavMenu}         
               color="inherit">
+            <MenuIcon />
             </IconButton>
             
             <Menu
@@ -83,16 +86,22 @@ const Navbar = () => {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              open={Boolean(anchorElNav)}
+              open={Boolean(anchorElNav)}             
               onClose={handleCloseNavMenu}
-
               sx={{
                 display: { xs: 'block', md: 'none' },
               }}
             >
-
-            </Menu>
-          </Box>
+              {
+              pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">
+                          {page}
+                    </Typography>
+                  </MenuItem>
+              ))}
+           </Menu>
+        </Box>
           <HouseIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -114,30 +123,35 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {/* menu desktop */}
+         
+            <Typography 
+                onClick={handleCloseNavMenu} 
+                sx={{ my: 2, color: 'white', display: 'block', mr: 2 }}>
+                <Link to='/' style={{color: 'white', textDecoration: "none"} }>
+                  Home
+                </Link>
+            </Typography>
+            <Typography 
+              onClick={handleCloseNavMenu} 
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Link to="/Register" style={{color: 'white', textDecoration: "none"}}>
+                  Register
+                </Link>
+            </Typography>
 
-            <Typography onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block', mr: 2 }}>
-                <Link to="/" style={{color: 'white', textDecoration: "none"} }>Home</Link>
-            </Typography>
-            <Typography onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                <Link to="/Register" style={{color: 'white', textDecoration: "none"}}>Register</Link>
-            </Typography>
-          </Box>
+      </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Ketsi" src="" />
+              <IconButton 
+                onClick={handleOpenUserMenu}          
+                sx={{ p: 0 }}>
+                <Avatar alt="Ke er" src="" />
               </IconButton>
             </Tooltip>
+           
+
             <Menu
-              PaperProps={{
-                sx:{
-                    "& .MUIMenu-list":{
-                        bgcolor: "primary.white",
-                        color: "white"
-                      },
-                  }
-              }}
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
@@ -153,7 +167,7 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-
+              
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center">
                     <Link style={{textDecoration: "none"}} to="/admin/dashboard">Admin</Link>
@@ -167,12 +181,12 @@ const Navbar = () => {
               </MenuItem>
 
               <MenuItem>
-                <Typography textAlign="center" >Log Out</Typography>
+                <Typography textAlign="center" color='#8e67b2' >Log Out</Typography>
               </MenuItem>
 
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center">
-                    <Link style={{textDecoration: "none"}} to="/logIn">LogIn</Link>
+                    <Link style={{textDecoration: "none"}} to="/login">LogIn</Link>
                 </Typography>
               </MenuItem>
 

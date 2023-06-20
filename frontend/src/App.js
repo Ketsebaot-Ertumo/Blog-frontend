@@ -14,26 +14,36 @@ import AdminDashboard from './admin/AdminDashboard';
 import CreatePost from './admin/CreatePost';
 import EditPost from './admin/EditPost';
 import AdminRoute from './components/AdminRoute';
+import UserRoute from './components/UserRoute';
 import Layout from './admin/global/Layout';
+import UserDashboard from './user/UserDashboard';
+
 
 
 //HOC
 const AdminDashboardHOC = Layout(AdminDashboard);
+const CreatePostHOC = Layout(CreatePost);
+const EditPostHOC = Layout(EditPost);
+const UserDashboardHOC = Layout(UserDashboard);
+
 
 const App = () => {
   return (
     <>
         <ToastContainer />
-        <Provider store={store} >
+        <Provider store={store}>
           <ProSidebarProvider>
             <BrowserRouter>
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/login' element={<LogIn />} />
-                <Route path='/admin/dashboard' element={<AdminRoute><AdminDashboardHOC /></AdminRoute>} />
-                <Route path='/admin/post/create' element={<AdminRoute><CreatePost /></AdminRoute>} />
-                <Route path='/admin/post/edit:id' element={<AdminRoute><EditPost /></AdminRoute>} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/post/id:' element={<Singlepost />} />
                 <Route path='*' element={<NotFound />} />
+                <Route path='/admin/dashboard' element={<AdminRoute><AdminDashboardHOC /></AdminRoute>} />
+                <Route path='/admin/post/create' element={<AdminRoute><CreatePostHOC /></AdminRoute>} />
+                <Route path='/admin/post/edit:id' element={<AdminRoute><EditPostHOC /></AdminRoute>} />
+                <Route path='/user/dashboard' element={<UserRoute><UserDashboardHOC /></UserRoute>} />
               </Routes>
             </BrowserRouter>
           </ProSidebarProvider>

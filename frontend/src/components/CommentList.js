@@ -1,0 +1,40 @@
+import * as React from 'react';
+import { List } from '@mui/material';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
+
+const CommentList= ({name, text}) => {
+    return(
+        <>
+            <List sx={{width: '100px', maxWidth: 360, bgcolor: 'background.paper'}}>
+                <ListItem alignItems="flex-start" >
+                    <ListItemAvatar>
+                        <Avatar alt="K E" src=""></Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={name}
+                        secondary={
+                          <>
+                            <Typography
+                                sx={{display: 'inline'}}
+                                component='span'
+                                variant='body2'
+                                color='text-primary'
+                            >
+                                {text}
+                            </Typography>
+
+                         </>
+                    } 
+                 />
+                    
+                </ListItem>
+            </List>
+        </>
+    )
+}   
+
+export default CommentList;
