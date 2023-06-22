@@ -1,20 +1,42 @@
 // import React from 'react';
+// import CreatePost from '../CreatePost';
+// import EditPost from '../EditPost';
+// import AdminDashboard from '../AdminDashboard';
+// import UserDashboard from '../../user/UserDashboard';
+// import Layout from './Layout';
 
-// const HeaderTop = () => {
-//     return (
-//         // <div className="navbar bg-[#FA7D19] text-white  px-16">
-//         //     <div className="flex-1">
-//         //         <a href="/" className="btn btn-ghost normal-case text-3xl">Blog App</a>
-//         //     </div>
-//         //     <div className="flex-none">
-//         //         <ul className="menu menu-horizontal p-0 font-bold">
-//         //             <li><a href='/'>Home</a></li>
-//         //             <li><a href='/api/posts'>About</a></li>
-//         //             <li><a href='<Footer />'>Contact Us</a></li>
-//         //         </ul>
-//         //     </div>
-//         // </div>
-//     );
-// };
+//     const AdminDashboardB = () => {
+//         return (
+//           <Layout>
+//             <AdminDashboard />
+//           </Layout>
+//         );
+//       };
+      
+//       const CreatePostB = () => {
+//         return (
+//           <Layout>
+//             <CreatePost />
+//           </Layout>
+//         );
+//       };
+      
+//       const EditPostB = () => {
+//         return (
+//           <Layout>
+//             <EditPost />
+//           </Layout>
+//         );
+//       };
+      
+//       const UserDashboardB = () => {
+//         return (
+//           <Layout>
+//             <UserDashboard />
+//           </Layout>
+//         );
+//       };
+      
 
-// export default HeaderTop;
+
+// export { AdminDashboardB, CreatePostB, EditPostB, UserDashboardB };

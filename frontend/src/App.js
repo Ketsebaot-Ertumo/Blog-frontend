@@ -10,14 +10,14 @@ import Singlepost from './pages/Singlepost';
 import Register from './pages/Register' ;
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import AdminDashboard from './admin/AdminDashboard';
-import CreatePost from './admin/CreatePost';
-import EditPost from './admin/EditPost';
 import AdminRoute from './components/AdminRoute';
 import UserRoute from './components/UserRoute';
 import Layout from './admin/global/Layout';
-import UserDashboard from './user/UserDashboard';
-
+//import { AdminDashboardB, CreatePostB, EditPostB, UserDashboardB } from './admin/global/HeaderTop';
+import AdminDashboard from './admin/AdminDashboard';
+import CreatePost from './admin/CreatePost';
+import EditPost from './admin/EditPost';
+import UserDashboard from './user/UserDashboard' ;
 
 
 //HOC
@@ -38,11 +38,11 @@ const App = () => {
                 <Route path='/' element={<Home />} />
                 <Route path='/login' element={<LogIn />} />
                 <Route path='/register' element={<Register />} />
-                <Route path='/post/id:' element={<Singlepost />} />
+                <Route path='/post/:id' element={<Singlepost />} />
                 <Route path='*' element={<NotFound />} />
                 <Route path='/admin/dashboard' element={<AdminRoute><AdminDashboardHOC /></AdminRoute>} />
                 <Route path='/admin/post/create' element={<AdminRoute><CreatePostHOC /></AdminRoute>} />
-                <Route path='/admin/post/edit:id' element={<AdminRoute><EditPostHOC /></AdminRoute>} />
+                <Route path='/admin/post/edit/:id' element={<AdminRoute><EditPostHOC /></AdminRoute>} />
                 <Route path='/user/dashboard' element={<UserRoute><UserDashboardHOC /></UserRoute>} />
               </Routes>
             </BrowserRouter>

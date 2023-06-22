@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import HeaderTop from './HeaderTop';
+//import {AdminDashboardB, UserDashboardB, CreatePostB, EditPostB }from './HeaderTop';
 import SidebarAdm from './Sidebar';
 
 const Layout= (Component) => ({...props}) => {
@@ -8,15 +8,16 @@ const Layout= (Component) => ({...props}) => {
         <>
             <div style={{display:'flex', minHeight: "100vh"}}>
                 <SidebarAdm />
-                <Box sx={{width: "100%", bgcolor: "efafafa"}}>
-                    <HeaderTop />
+                <Box sx={{width: "100%", bgcolor: "#fafafa"}}>
+                    
                     <Box sx={{p:3}}>
                         <Component {...props} />
                     </Box>
                 </Box>
             </div>
-        </>
-    )
+                
+        </>       
+    );
 }
 
 export default Layout

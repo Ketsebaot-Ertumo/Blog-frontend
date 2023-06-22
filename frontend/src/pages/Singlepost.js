@@ -78,7 +78,7 @@ const Singlepost= () =>{
     return(
         <>
         <Navbar />
-        <Box sx={{bgcolor: "efafafa", display: 'flex', justifyContent: 'center', pt:4, pb:4, minHeight:'100vh'}}>
+        <Box sx={{bgcolor: "#fafafa", display: 'flex', justifyContent: 'center', pt:4, pb:4, minHeight:'100vh'}}>
             {
                 loading ? <Loader /> : 
                 <>
@@ -125,7 +125,7 @@ const Singlepost= () =>{
                             {
                                 userInfo ? 
                                 <>
-                                    <Box sx={{pt:1, pl:3, pb:3, bgcolor: 'efafafa'}}>
+                                    <Box sx={{pt:1, pl:3, pb:3, bgcolor: '#fafafa'}}>
                                         <h2>Add your comment</h2>
                                         <form onSubmit={addComment}>
                                             <TextareaAutosize

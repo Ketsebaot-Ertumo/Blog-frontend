@@ -1,6 +1,6 @@
 
 
-var toolbarOptions = (
+var toolbarOptions = [
     ["bold", "italic", "underline", "stike"],         //toggled button
     ["blockquote"],
 
@@ -18,7 +18,7 @@ var toolbarOptions = (
     [{'align':[] }],
 
     ['clean']                                            // remove formatting button
-);
+];
 
 export const modules = {
     toolbar: toolbarOptions

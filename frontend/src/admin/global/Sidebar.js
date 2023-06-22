@@ -4,7 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Box } from "@mui/material";
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import Person3Icon from '@mui/icons-material/Person3';
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom"; 
 import { useDispatch, useSelector } from "react-redux";
 import {userLogoutAction, userProfileAction} from '../../redux/actions/userAction';
 import { useNavigate } from "react-router-dom";
@@ -33,25 +33,25 @@ const SidebarAdm = () => {
     return(
         <>
             <Sidebar backgroundColor="white" style={{boarderRightStyle: "none"}}>
-                <Box sx={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height:'40px'}}>
+                <Box sx={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height:'100%'}}>
                     <Box sx={{pt:4}}>
                         <Menu 
                             menuItemStyles={{
                                 button: {
                                     [`&.${menuClasses.button}`]: {
-                                        color: "e000",
+                                        color: "#000",
                                     },
                                     [`&.${menuClasses.disabled}`]: {
                                         color: "green",
                                     },
                                     '&:hover': {
-                                        backgroundColor: "afafafa",
-                                        color: "e1976d2",
+                                        backgroundColor: "#fafafa",
+                                        color: "#1976d2",
                                     },
                                 },
                                 icon: {
                                     [`&.${menuClasses.icon}`]: {
-                                        color: "e1976d2",
+                                        color: "#1976d2",
                                     }
                                 },
                             }}>
@@ -73,16 +73,16 @@ const SidebarAdm = () => {
                                     menuItemStyles={{
                                         button:{
                                             [`&.${menuClasses.button}`]:{
-                                                color: 'e000',
+                                                color: '#000',
                                             },
                                             '&:hover': {
-                                                background: 'afafafa',
-                                                color: "e1976d2",
+                                                backgroundColor: '#fafafa',
+                                                color: "#1976d2",
                                             },
                                         },
                                         icon:{
                                             [`&.${menuClasses.icon}`]:{
-                                                color: 'e1976d2',
+                                                color: '#1976d2',
                                             }
                                         },
                                     }}>

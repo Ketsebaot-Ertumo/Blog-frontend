@@ -78,7 +78,7 @@ const PostCard = ({
           <CardContent>
           <Typography variant="body2" color="text.secondary">
             {//Content here
-            
+            <p>This is  the first post to see the pages.</p>
             }
             <Box component='span' dangerouslySetInnerHTML={{__html:content.split(' ').slice(0, 10).join('') + '...'}}></Box>
           </Typography>

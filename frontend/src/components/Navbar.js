@@ -27,7 +27,6 @@ const Navbar = () => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    console.log(event.currentTarget)
     setAnchorElUser(event.currentTarget);    //err
   };
 
@@ -180,9 +179,7 @@ const Navbar = () => {
                 </Typography>
               </MenuItem>
 
-              <MenuItem>
-                <Typography textAlign="center" color='#8e67b2' >Log Out</Typography>
-              </MenuItem>
+          
 
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center">

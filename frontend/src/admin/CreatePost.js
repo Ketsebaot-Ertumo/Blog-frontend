@@ -6,9 +6,8 @@ import Dropzone from 'react-dropzone';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import axios from "axios";
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { modules } from "../components/moduleToolbar";
-import { create } from "@mui/material/styles/createTransitions";
+import "react-quill/dist/quill.snow.css";
+import {modules}  from '../components/moduleToolbar';
 import { toast } from "react-toastify";
 
 
@@ -62,7 +61,7 @@ const CreatePost = () => {
         <>
           <Box sx={{bgcolor:"white", padding: "20px 200px"}}>
               <Typography variant="h5" sx={{pb:4}}>Create Post</Typography>
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{st:1}}>
+              <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt:1}}>
                 <TextField sx={{mb:3}}
                     fullwidth
                     id="title"
@@ -85,37 +84,40 @@ const CreatePost = () => {
                             modules={modules}
                             value={values.content}
                             onChange={(e) => setFieldValue('content',e)}
-                    />
-                    <Box component='span' sx={{color:'ed32f2f', fontSize:"12px", pl:"2"}}>touched.content</Box>
+                        />
+
+                    
+                        <Box component='span' sx={{color:'#d32f2f', fontSize:"12px", pl: 2 }}>{touched.content && errors.content}</Box>
                  </Box>
+
                  <Box border={"2px dashed blue"} sx={{p:1}}>
                     <Dropzone
                         acceptedFiles=".jpg, .jpng, .png, .mp4"
                         multiple={false}
-                        //maxFiles={J}
+                        //maxFiles={3}
                         oneDrop={(acceptedFiles) =>
                             acceptedFiles.map((file, index) =>{
                                 const reader= new FileReader();
                                 reader.readAsDataURL(file);
                                 reader.onloadend= () =>{
-                                    setFieldValue=('images', reader.result)
+                                    setFieldValue('images', reader.result)
                             }
                      })
                     }  
                     >
-                        {({getRootProps, getInputProps, isDragActive}) =>{
+                        {({getRootProps, getInputProps, isDragActive}) =>(
                             <Box
                                 {...getRootProps()}
 
                                 p="1rem"
-                                sx= {{'&:hover': {curser: "pointer"}, bgcolor:isDragActive ? "acceffc" : "afafafa "}}
+                                sx= {{'&:hover': {cursor: "pointer"}, bgcolor: isDragActive ? "#cceffc" : "#fafafa "}}
                             >
                                 <input {...getInputProps()} />
                                 {
                                    isDragActive ? 
                                    <>
                                     <p style={{textAlign: "center"}}><CloudUploadIcon sx={{color:"primary.main", mr:2}} /></p>
-                                    <p style={{textAlign:"center", fontSize:"12px"}} > Drag here</p>
+                                    <p style={{textAlign:"center", fontSize:"12px"}} > Drag here!</p>
                                   
                                    </> :
 
@@ -123,7 +125,7 @@ const CreatePost = () => {
 
                                    <>
                                         <p style={{textAlign: "center"}}><CloudUploadIcon sx={{color:"primary.main", mr:2}} /></p>
-                                        <p style={{textAlign:"center", fontSize:"12px"}} > Drag and Drop here or click to choose</p>
+                                        <p style={{textAlign:"center", fontSize:"12px"}} > Drag and Drop image here or click to choose!</p>
                                    </> :
 
                                    <>
@@ -135,7 +137,7 @@ const CreatePost = () => {
                                 
                                 
                             </Box> 
-                        } }
+     ) }
                     </Dropzone>
                  </Box>
 
@@ -144,7 +146,7 @@ const CreatePost = () => {
                     fullWidth
                     variant="contained"
                     elevation={0}
-                    sx={{mt:3, p:1,nmb:2, boarderRadius: "25px",}}
+                    sx={{mt:3, p:1,mb:2, boarderRadius: "25px",}}
                  //disabled={loading}
                  >
                     Create Post
