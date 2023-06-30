@@ -1,7 +1,9 @@
-import { Box } from "@mui/material";
+import { Box} from "@mui/material";
 import React from "react";
-//import {AdminDashboardB, UserDashboardB, CreatePostB, EditPostB }from './HeaderTop';
 import SidebarAdm from './Sidebar';
+
+
+
 
 const Layout= (Component) => ({...props}) => {
     return(
@@ -9,7 +11,7 @@ const Layout= (Component) => ({...props}) => {
             <div style={{display:'flex', minHeight: "100vh"}}>
                 <SidebarAdm />
                 <Box sx={{width: "100%", bgcolor: "#fafafa"}}>
-                    
+                    {/* /<HeaderTop /> */}
                     <Box sx={{p:3}}>
                         <Component {...props} />
                     </Box>

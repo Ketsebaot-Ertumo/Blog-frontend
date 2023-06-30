@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { USER_LOAD_FAIL, USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOGOUT_FAIL, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, 
+import { USER_PROFILE_FAIL, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_LOGOUT_FAIL, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, 
     USER_SIGNUP_FAIL, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS } from "../constants/userConstants"
 import axios from 'axios';
 
@@ -63,19 +63,81 @@ export const userLogoutAction = (user) => async(dispatch) =>{
     }
 }
 
-//user profile action
+//user profile action of me
 export const userProfileAction =() => async(dispatch) =>{
-    dispatch({type: USER_LOAD_REQUEST});
+    dispatch({type: USER_PROFILE_REQUEST});
     try{
         const {data} = await  axios.get("/api/me");
         dispatch({
-            type: USER_LOAD_SUCCESS,
+            type: USER_PROFILE_SUCCESS,
             payload: data
         });
     }catch(error){
         dispatch({
-            type: USER_LOAD_FAIL,
+            type: USER_PROFILE_FAIL,
             payload: error.response.data.error
         });
     }
 }
+
+
+// //user profile action
+// export const userProfileAction = (userId) => {
+//     return async (dispatch) => {
+//       dispatch({ type: 'USER_PROFILE_REQUEST' })
+  
+//       try {
+//         const response = await fetch(`/api/me/${userId}/profile`)
+//         const userProfile = await response.json()
+  
+//         dispatch({
+//           type: 'USER_PROFILE_SUCCESS',
+//           payload: userProfile
+//         })
+//       } catch (error) {
+//         dispatch({ type: 'USER_PROFILE_FAIL', error })
+//       }
+//     }
+//   }
+
+
+//user profile update action
+//export const updateUserReducerProfile = (userId, updatedProfile) => {
+    // return async (dispatch) => {
+    //     dispatch({ type: 'UPDATE_USER_PROFILE_SUCCESS' })
+    
+    //     try {
+    //       const response = await fetch(`/api/me/${userId}/profile`, {
+    //         method: 'PUT',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(updatedProfile)
+    //       })
+    //       const userProfile = await response.json()
+    
+    //       dispatch({
+    //         type: 'UPDATE_USER_PROFILE_SUCCESS',
+    //         payload: userProfile
+    //       })
+    //     } catch (error) {
+    //       dispatch({ type: 'UPDATE_USER_PROFILE_FAILURE', error })
+    //     }
+    //   }
+    // }
+
+
+//user profile delete action
+//export const deleteUserProfile = (userId) => {
+    // return async (dispatch) => {
+    //     dispatch({ type: 'DELETE_USER_PROFILE_REQUEST' })
+    
+    //     try {
+    //       await fetch(`/api/me/${userId}/profile`, { method: 'DELETE' })
+    
+    //       dispatch({ type: 'DELETE_USER_PROFILE_SUCCESS' })
+    //     } catch (error) {
+    //       dispatch({ type: 'DELETE_USER_PROFILE_FAILURE', error })
+    //     }
+    //   }
+    // }
+
+

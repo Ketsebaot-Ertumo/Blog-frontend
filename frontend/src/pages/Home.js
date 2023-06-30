@@ -13,20 +13,32 @@ const Home= () =>{
     const [posts, setPosts]= useState([]);
     const [loading, setLoading]= useState(false);
 
-    //display post
-    const showPosts= async () => {
-        setLoading(true);
-        try{
-            const {data}= await axios.get('/api/posts/show');
-            setPosts(data.posts);
-            setLoading(false);
-        }catch(error){
-            console.log(error.response.data.error);
-        }
-    }
-    useEffect(()=>{
-        showPosts();
-    })
+
+    // // //display post
+    // const showPosts= async (res) => {
+    //     setLoading(true);
+    //     try{
+    // //         const {data} =axios.get('/api/posts/show');
+    // //         setPosts(data.posts);
+    
+    //         axios.get('/api/posts/show').then((res) => {
+    //         setPosts(res.data);
+    //         setLoading(false);});
+    //     }catch(error){
+    //         console.log(error.response.data.error);
+    //     }
+    // }
+    // useEffect(()=>{
+    //     showPosts();
+    // }, []);
+
+
+// //show posts
+//     useEffect(()=>{
+//         axios.get('/api/posts/show').then((res) => {
+//             setPosts(res.data); });
+//     }, []);
+
 
     return(
         <>
@@ -36,10 +48,8 @@ const Home= () =>{
                 <Container sx={{pt: 5, pb: 5, minHeight: '83vh'}}>
                         <Box sx={{flexGrow: 1}}>
 
-                            <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
-                                
+                            <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>  
                                 {
-
                                     loading ? <Loader /> : 
                                     posts && posts.map((post, index) =>(
                                         
@@ -49,9 +59,11 @@ const Home= () =>{
                                                 title={post.title}
                                                 content={post.content}
                                                 image={post.image ? post.image.url : ''}
-                                                subheader={moment(post.createdAt).format('MM, DD, YYYY')}
+                                                subheader={moment(post.createdAt).format('MMM DD, YYYY')}
                                                 comments={post.comments.length}
                                                 likes={post.likes.length}
+                                                likesId={post.likes}
+                                                showPosts={showPosts}
                                              />
                                         </Grid>    
                                     ))
@@ -68,4 +80,4 @@ const Home= () =>{
     )
 }
 
-export default Home
+export default Home;

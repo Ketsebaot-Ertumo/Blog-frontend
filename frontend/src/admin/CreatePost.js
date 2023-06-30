@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, TextField, Typography} from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from 'yup';
@@ -47,15 +47,55 @@ const CreatePost = () => {
             }
         });
 
+        const [posts, setPosts] = useState([]);
+
+        // const createNewPost = async(values) => {
+        //     //console.log(values);
+        //     try{
+        //         // const data = await axios.post('/api/post/create', values);          //err
+        //         // setPosts([...posts, data]); 
+
+        //         const response = await axios.post('/api/post/create', values);
+        //         const newPost = response.data.post;
+        //         setPosts([...posts, newPost]);
+        //                                                  //err
+        //         toast.success('post created');
+        //     }catch(error){
+        //         console.log(error, values);
+        //         toast.error(error);
+        //     }
+
+        //     // axios.post('/api/post/create', values)
+        //     //     .then(res=>{ console.log(res) })
+        //     //     .catch(err=>{ console.log(err)
+        //     //         })
+        // }
+
         const createNewPost = async(values) => {
-            try{
-                const {data} = await axios.post('api/post/create', values);
-                toast.success('post created');
-            }catch(error){
+            try {
+                const formData = new FormData();
+                formData.append('title', values.title);
+                formData.append('content', values.content);
+                formData.append('image', values.image);
+            
+                const response = await axios.post('/api/post/create', formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data',
+                  },
+                });
+            
+                const newPost = response.data.post;
+                setPosts([...posts, newPost]);
+            
+                toast.success('Post created successfully');
+              } catch (error) {
                 console.log(error);
-                toast.error(error);
-            }
-        }
+                toast.error(error.message || 'Failed to create post');
+              }
+            };
+
+        
+
 
     return(
         <>
@@ -63,7 +103,7 @@ const CreatePost = () => {
               <Typography variant="h5" sx={{pb:4}}>Create Post</Typography>
               <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt:1}}>
                 <TextField sx={{mb:3}}
-                    fullwidth
+                    fullWidth
                     id="title"
                     label="Post title"
                     name="title"
@@ -92,18 +132,18 @@ const CreatePost = () => {
 
                  <Box border={"2px dashed blue"} sx={{p:1}}>
                     <Dropzone
-                        acceptedFiles=".jpg, .jpng, .png, .mp4"
+                        acceptedFiles=".jpg, .jpeg, .png, .jpng, .mp4"
                         multiple={false}
                         //maxFiles={3}
-                        oneDrop={(acceptedFiles) =>
+                        onDrop={(acceptedFiles) =>
                             acceptedFiles.map((file, index) =>{
+                                //setFieldValue('image',file);
                                 const reader= new FileReader();
                                 reader.readAsDataURL(file);
                                 reader.onloadend= () =>{
-                                    setFieldValue('images', reader.result)
-                            }
-                     })
-                    }  
+                                    setFieldValue('image', reader.result)
+                                     }
+                            })}  
                     >
                         {({getRootProps, getInputProps, isDragActive}) =>(
                             <Box
@@ -129,15 +169,14 @@ const CreatePost = () => {
                                    </> :
 
                                    <>
-                                      <Box sx={{display: "flex", justifyContent: 'space-around', alignItem: 'center'}}>
-                                        <Box><img style={{maxWidth: '100px'}} src={values.image} alt='' /></Box>
+                                      <Box sx={{display: "flex", justifyContent: 'space-around', alignItems: 'center'}}>
+                                        <Box><img style={{maxWidth: '100px'}} src={values.image} alt="" /></Box>
                                       </Box>  
                                    </>
                                 }
                                 
-                                
                             </Box> 
-     ) }
+                        )}
                     </Dropzone>
                  </Box>
 

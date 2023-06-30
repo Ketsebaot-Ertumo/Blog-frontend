@@ -41,7 +41,7 @@ const Navbar = () => {
   return (
     <AppBar position="static">
       <Container>
-        {/*ptincipal menu*/}
+        {/*principal menu*/}
         <Toolbar disableGutters>
           <HouseIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -175,7 +175,7 @@ const Navbar = () => {
 
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center">
-                    <Link style={{textDecoration: "none"}} to="/user/dashboard">User</Link>
+                    <Link style={{textDecoration: "none"}} to="/user/profile">User</Link>
                 </Typography>
               </MenuItem>
 

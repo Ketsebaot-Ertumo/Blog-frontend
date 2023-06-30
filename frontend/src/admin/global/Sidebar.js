@@ -62,7 +62,8 @@ const SidebarAdm = () => {
                                         <MenuItem component={<Link to="/admin/post/create" />} icon={<PostAddIcon />}>Create Post</MenuItem>
                                     </>:
                                     <>
-                                    <MenuItem component={<Link to="/user/dashboard" />} icon={<DashboardIcon />}>Dashboard</MenuItem>
+                                    <MenuItem component={<Link to="/user/profile" />} icon={<DashboardIcon />}>Dashboard</MenuItem>
+                                    <MenuItem component={<Link to="/user/post/create" />} icon={<PostAddIcon />}>Create Post</MenuItem>
                                     </>
                             }
 

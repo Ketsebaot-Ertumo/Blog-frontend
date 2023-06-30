@@ -7,6 +7,10 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FvoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import CommentIcon from '@mui/icons-material/Comment';
+import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Box, Button, Divider } from "@mui/material";
 import axios from "axios";
@@ -25,15 +29,18 @@ import CommentList from '../components/CommentList';
 
 const Singlepost= () =>{
     const {userInfo}= useSelector(state => state.signIn);
+    
     const [title, setTitle]= useState('');
     const [content, setContent]= useState('');
     const [image, setImage]= useState('');
     const [createdAt, setCreatedAt]= useState('');
-    const [loading, setLoading]= useState('');
+    const [loading, setLoading]= useState(false);
     const [comment, setComment]= useState('');
-    const [Comments, setComments]= useState('');
+    const [Comments, setComments]= useState([]);
+    //const [likes, setLikes]= useState([]),
 
     const {id}= useParams();
+
     //fetch single post
     const dispalySinglePost= async () => {
         setLoading(true);
@@ -46,6 +53,7 @@ const Singlepost= () =>{
             setCreatedAt(data.post.createdAt);
             setLoading(false);
             setComments(data.post.Comments);
+            // setLikes(data.post.likes);
         }catch(error){
             console.log(error);
         }
@@ -56,6 +64,7 @@ const Singlepost= () =>{
         dispalySinglePost();
     }, [])
 
+    
     //add comment
     const addComment= async (e) => {
         e.preventDefault();
@@ -73,20 +82,19 @@ const Singlepost= () =>{
         }
     }
 
-    // add like and remove like ???
 
-    return(
-        <>
+return(
+    <>
         <Navbar />
         <Box sx={{bgcolor: "#fafafa", display: 'flex', justifyContent: 'center', pt:4, pb:4, minHeight:'100vh'}}>
-            {
-                loading ? <Loader /> : 
-                <>
+          {
+            loading ? <Loader /> : 
+            <>
                 <Card sx={{maxWidth: 1000, height: '100%'}}>
                     <CardHeader
                         avatar={
                             <Avatar sx={{bgcolor: red[500] }} aria-label="recipe">
-                                K
+                                {/* K */}
                             </Avatar>
                         }
                         action={
@@ -95,7 +103,7 @@ const Singlepost= () =>{
                             </IconButton>
                         }
                         title={title}
-                        subheader={moment(createdAt).format('MMM DD, YYYY')}
+                        subheader={moment(createdAt).format('MM DD, YYYY')}
                     />
                         <CardMedia
                             component='img'
@@ -113,7 +121,7 @@ const Singlepost= () =>{
                             {
                                 Comments.length === 0 ? '' : 
                                     <Typography variant="h5" sx={{pt: 3, mb: 2}}>
-                                        Comments
+                                        Comments: 
                                     </Typography>
                             }
                             {
@@ -125,8 +133,8 @@ const Singlepost= () =>{
                             {
                                 userInfo ? 
                                 <>
-                                    <Box sx={{pt:1, pl:3, pb:3, bgcolor: '#fafafa'}}>
-                                        <h2>Add your comment</h2>
+                                    <Box sx={{pt:1, pl:3, pb:3, bgcolor: "#fafafa" }}>
+                                        <h2>Add your comment here!</h2>
                                         <form onSubmit={addComment}>
                                             <TextareaAutosize
                                                 onChange={(e) => setComment(e.target.value)}
@@ -134,7 +142,7 @@ const Singlepost= () =>{
                                                 aria-label="minimum height"
                                                 minRows={3}
                                                 placeholder="Add a comment..."
-                                                style={{width: 540, padding: "5px"}}
+                                                style={{width: 500, padding: "5px"}}
                                            />
                                                <Box sx={{pt:1}}>
                                                     <Button type='submit' variant='contained'>

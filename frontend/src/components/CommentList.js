@@ -12,7 +12,7 @@ const CommentList= ({name, text}) => {
             <List sx={{width: '100px', maxWidth: 360, bgcolor: 'background.paper'}}>
                 <ListItem alignItems="flex-start" >
                     <ListItemAvatar>
-                        <Avatar alt="K E" src=""></Avatar>
+                        <Avatar alt="" src="" />
                     </ListItemAvatar>
                     <ListItemText
                         primary={name}
@@ -20,9 +20,9 @@ const CommentList= ({name, text}) => {
                           <>
                             <Typography
                                 sx={{display: 'inline'}}
-                                component='span'
-                                variant='body2'
-                                color='text-primary'
+                                component="span"
+                                variant="body2"
+                                color="text-primary"
                             >
                                 {text}
                             </Typography>

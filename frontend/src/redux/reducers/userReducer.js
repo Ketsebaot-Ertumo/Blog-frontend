@@ -1,7 +1,10 @@
 
 import { USER_SIGNUP_REQUEST, USER_SIGNUP_FAIL, USER_SIGNUP_RESET, 
     USER_SIGNUP_SUCCESS, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, 
-    USER_SIGNIN_FAIL, USER_SIGNIN_RESET, USER_LOAD_FAIL, USER_LOAD_RESET, USER_LOAD_SUCCESS, USER_LOAD_REQUEST, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_LOGOUT_FAIL, USER_LOGOUT_RESET } from "../constants/userConstants";
+    USER_SIGNIN_FAIL, USER_SIGNIN_RESET, USER_PROFILE_FAIL, USER_PROFILE_RESET, 
+    USER_PROFILE_SUCCESS, USER_PROFILE_REQUEST, USER_LOGOUT_REQUEST, 
+    USER_LOGOUT_SUCCESS, USER_LOGOUT_FAIL, USER_LOGOUT_RESET } from "../constants/userConstants";
+
 
 //sign up
 export const userReducerSignUp =(state={}, action) => {
@@ -56,30 +59,81 @@ export const userReducerSignIn =(state={}, action) => {
     }
 }
 
+// //user profile                          
+// export const userReducerProfile =(state={user: null}, action) => {
+//     switch (action.type) {
+//         case USER_PROFILE_REQUEST:
+//             return{
+//                 loading: true, user: null}
+//         case USER_PROFILE_SUCCESS:
+//             return{
+//                 loading: false,
+//                 user: action.payload
+//             }
+//         case USER_PROFILE_FAIL:
+//             return{ 
+//                 loading: false,
+//                 user: null,
+//                 error: action.payload
+//             }
+//         case USER_PROFILE_RESET:
+//             return{}
+            
+//         default:
+//            return state;
+//     }
+// }
+
 //user profile
 export const userReducerProfile =(state={user: null}, action) => {
     switch (action.type) {
-        case USER_LOAD_REQUEST:
-            return{
-                loading: true, user: null}
-        case USER_LOAD_SUCCESS:
-            return{
-                loading: false,
-                user: action.payload.user
-            }
-        case USER_LOAD_FAIL:
-            return{ 
-                loading: false,
-                user: null,
-                error: action.payload.user
-            }
-        case USER_LOAD_RESET:
-            return{}
-            
+        case USER_PROFILE_REQUEST:
+             return{
+                 loading: true, user: null}    
+        case USER_PROFILE_SUCCESS:
+          return {       
+               ...state,
+               userProfile: action.payload
+          }
+        // other cases...
+    
         default:
-           return state;
+          return state
+      }
     }
-}
+
+
+//user update
+//export const updateUserReducerProfile = (state = initialState, action) => {
+export const updateUserReducerProfile = (state = {user: null}, action) => {
+    switch (action.type) {
+      case 'UPDATE_USER_PROFILE_SUCCESS':
+        return {
+          ...state,
+          userProfile: action.payload
+        }
+      // other cases...
+      default:
+        return state
+    }
+  }
+
+
+//user profile delete
+//export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = {user: null}, action) => {
+    switch (action.type) {
+        case 'DELETE_USER_PROFILE_SUCCESS':
+          return {
+            ...state,
+            userProfile: null
+          }
+        // other cases...
+        default:
+          return state
+      }
+    }
+
 
 //log out
 export const userReducerLogout =(state={}, action) => {

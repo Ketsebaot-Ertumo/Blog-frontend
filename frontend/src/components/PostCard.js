@@ -29,7 +29,7 @@ const PostCard = ({
         //add like
       const addLike= async() => {
         try{
-          const {data}= await axios.get(`/api/like/post/${id}`);
+          const {data}= await axios.put(`/api/like/post/${id}`);
           //console.log("likes", data.post);
           if(data.success == true){
             showPosts();
@@ -77,10 +77,8 @@ const PostCard = ({
 
           <CardContent>
           <Typography variant="body2" color="text.secondary">
-            {//Content here
-            <p>This is  the first post to see the pages.</p>
-            }
-            <Box component='span' dangerouslySetInnerHTML={{__html:content.split(' ').slice(0, 10).join('') + '...'}}></Box>
+            {/*Content here*/}
+            <Box component='span' dangerouslySetInnerHTML={{ __html:content.split(" ").slice(0, 10).join(" ") + "..."}}></Box>
           </Typography>
         </CardContent>
 

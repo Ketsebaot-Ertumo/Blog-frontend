@@ -14,8 +14,9 @@ import { useState } from "react";
 
 
 const AdminDashboard = () => {
+    
     const [posts, setPosts] = useState([]);
-
+    //show all posts
     const displayPost= async () => {
         try{
             const {data} = await axios.get('/api/posts/show');
@@ -28,8 +29,18 @@ const AdminDashboard = () => {
         displayPost();
     }, []);
 
+
+    // //show all posts
+    // useEffect(()=>{
+    //     axios.get('/api/posts/show).then((res) => {
+    //         setPosts(res.data);
+    //     });
+    // }, []);
+
+
+
     //delete post by id
-    const deletePostById= async(e,id) => {
+    const deletePostById= async(e, id) => {
         //console.log(id)
         if(window.confirm('Are you sure you want to delete this post')){
             try{
@@ -62,7 +73,7 @@ const AdminDashboard = () => {
             headerName: 'Image',
             width: 150,
             renderCell: (params) => (
-                <img width="40%" src={params.row.image.url} />
+                <img width="40%" src={params.row.image.url} alt="" />
             )
         },
         {

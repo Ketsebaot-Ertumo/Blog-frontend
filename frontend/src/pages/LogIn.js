@@ -33,7 +33,7 @@ const LogIn= () =>{
             if (userInfo.role === 'admin') {
                 navigate('/admin/dashboard');
             }else{
-                navigate('/user/dashboard');
+                navigate('/user/profile');
              } }
     //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated])

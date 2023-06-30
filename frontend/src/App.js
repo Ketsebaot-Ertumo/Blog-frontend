@@ -13,18 +13,18 @@ import store from './redux/store';
 import AdminRoute from './components/AdminRoute';
 import UserRoute from './components/UserRoute';
 import Layout from './admin/global/Layout';
-//import { AdminDashboardB, CreatePostB, EditPostB, UserDashboardB } from './admin/global/HeaderTop';
 import AdminDashboard from './admin/AdminDashboard';
-import CreatePost from './admin/CreatePost';
 import EditPost from './admin/EditPost';
-import UserDashboard from './user/UserDashboard' ;
+import UserProfile from './user/userProfile';
+import CreatePost from './admin/CreatePost';
+
 
 
 //HOC
 const AdminDashboardHOC = Layout(AdminDashboard);
 const CreatePostHOC = Layout(CreatePost);
 const EditPostHOC = Layout(EditPost);
-const UserDashboardHOC = Layout(UserDashboard);
+const UserProfileHOC = Layout(UserProfile);
 
 
 const App = () => {
@@ -43,7 +43,9 @@ const App = () => {
                 <Route path='/admin/dashboard' element={<AdminRoute><AdminDashboardHOC /></AdminRoute>} />
                 <Route path='/admin/post/create' element={<AdminRoute><CreatePostHOC /></AdminRoute>} />
                 <Route path='/admin/post/edit/:id' element={<AdminRoute><EditPostHOC /></AdminRoute>} />
-                <Route path='/user/dashboard' element={<UserRoute><UserDashboardHOC /></UserRoute>} />
+                <Route path='/user/profile' element={<UserRoute><UserProfileHOC /></UserRoute>} />
+                <Route path='/user/post/create' element={<UserRoute><CreatePostHOC /></UserRoute>} />
+                <Route path='/user/post/edit/:id' element={<UserRoute><EditPostHOC /></UserRoute>} />
               </Routes>
             </BrowserRouter>
           </ProSidebarProvider>

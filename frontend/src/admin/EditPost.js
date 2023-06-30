@@ -56,7 +56,7 @@ const EditPost = () => {
             }
         });
 
-        //show post by id
+        //show single post by id
         const singlePostById= async () => {
             //console.log(id);
             try{
@@ -64,7 +64,7 @@ const EditPost = () => {
                 setTitle(data.post.title);
                 setContent(data.post.content);
                 setImagePreview(data.post.image.url);
-                console.log('single post admin', data.post)
+                console.log('single post', data.post)
             }catch(error){
                 console.log(error);
                 toast.error(error);
@@ -81,6 +81,7 @@ const EditPost = () => {
             const {data}= await axios.post(`/api/update/post/${id}`, values);
             if (data.success=== true){
                 toast.success('post updated');
+                navigate('/user/dashboard')
                 navigate('/admin/dashboard')
             }
         }catch(error){
@@ -96,7 +97,7 @@ const EditPost = () => {
                 <Typography variant="h5" sx={{pb:4}}>Create Post</Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{st:1}}>
                 <TextField sx={{mb:3}}
-                    fullwidth
+                    fullWidth
                     id="title"
                     label="Post title"
                     name="title"
@@ -118,29 +119,30 @@ const EditPost = () => {
                             value={values.content}
                             onChange={(e) => setFieldValue('content',e)}
                     />
-                    <Box component='span' sx={{color:'ed32f2f', fontSize:"12px", pl:"2"}}>touched.content</Box>
+                    <Box component='span' sx={{color:'#d32f2f', fontSize:"12px", pl:"2"}}>touched.content</Box>
                 </Box>
                 <Box border={"2px dashed blue"} sx={{p:1}}>
                     <Dropzone
-                        acceptedFiles=".jpg, .jpng, .png, .mp4"
+                        acceptedFiles=".jpg, .jpng, .png, jpeg, .mp4"
                         multiple={false}
-                        //maxFiles={J}
-                        oneDrop={(acceptedFiles) =>
+                        //maxFiles={3}
+                        onDrop={(acceptedFiles) =>
                             acceptedFiles.map((file, index) =>{
                                 const reader= new FileReader();
                                 reader.readAsDataURL(file);
                                 reader.onloadend= () =>{
-                                    setFieldValue=('images', reader.result)
+                                    setFieldValue('images', reader.result)
                             }
-                    })
-                    }  
+                          })
+                        }  
                     >
-                        {({getRootProps, getInputProps, isDragActive}) =>{
+                        
+                        {({getRootProps, getInputProps, isDragActive}) =>(
                             <Box
                                 {...getRootProps()}
 
                                 p="1rem"
-                                sx= {{'&:hover': {curser: "pointer"}, bgcolor:isDragActive ? "acceffc" : "afafafa "}}
+                                sx= {{'&:hover': {curser: "pointer"}, bgcolor: isDragActive ? "#cceffc" : "#fafafa "}}
                             >
                                 <input {...getInputProps()} />
                                 {
@@ -159,7 +161,7 @@ const EditPost = () => {
                                     </> :
 
                                     <>
-                                        <Box sx={{display: "flex", justifyContent: 'space-around', alignItem: 'center'}}>
+                                        <Box sx={{display: "flex", justifyContent: 'space-around', alignItems: 'center'}}>
                                         <Box><img style={{maxWidth: '100px'}} src={values.image === '' ? imagePreview: values.image} alt='' /></Box>
                                         </Box>  
                                     </>
@@ -167,7 +169,7 @@ const EditPost = () => {
                                 
                                 
                             </Box> 
-                        } }
+                         )}
                     </Dropzone>
                 </Box>
 

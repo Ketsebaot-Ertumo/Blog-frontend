@@ -1,7 +1,7 @@
 
 
 var toolbarOptions = [
-    ["bold", "italic", "underline", "stike"],         //toggled button
+    ['bold', 'italic', 'underline', 'stike'],         //toggled button
     ["blockquote"],
 
     [{'header': 1}, {'header': 2}],                     //Custom button
