@@ -46,7 +46,7 @@ const Singlepost= () =>{
     //fetch single post
     const dispalySinglePost= async () => {
         setLoading(true);
-        console.log(params);
+        console.log(id);
         try{
             const {data}= await axios.get(`/api/post/${postId}`);
             //console.log(data);
