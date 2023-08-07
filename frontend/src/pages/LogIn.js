@@ -107,6 +107,7 @@ const LogIn= () =>{
                 />
              
              <Button disabled={loading} fullWidth variant="contained" type="submit">{loading ? "Loading...":"Log In" }</Button>
+             <p><a href="/Register">Don't have an Account ?</a>      <a href="/ForgotP"> Forgot Password?</a></p>
            </Box>
         </Box>
       </Box>

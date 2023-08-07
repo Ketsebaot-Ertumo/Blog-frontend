@@ -16,15 +16,35 @@ import { useState } from "react";
 const AdminDashboard = () => {
     
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    
     //show all posts
-    const displayPost= async () => {
+    // const displayPost= async (res) => {
+    //     setLoading(true);
+    //     try{
+    //         const {data} = await axios.get('/api/posts/show');
+    //         setPosts(data.posts);
+    //         setLoading(false);
+    //     }catch(error){
+    //         console.log(error);
+    //         toast.error('Failed to fetch posts.');
+    //         setLoading(false);
+    //     }
+    // }
+
+    const displayPost= async (res) => {
+        setLoading(true);
         try{
             const {data} = await axios.get('/api/posts/show');
             setPosts(data.posts);
+            setLoading(false);
         }catch(error){
             console.log(error);
+            toast.error('Failed to fetch posts.');
+            setLoading(false);
         }
     }
+
     useEffect(() =>{
         displayPost();
     }, []);
@@ -40,21 +60,22 @@ const AdminDashboard = () => {
 
 
     //delete post by id
-    const deletePostById= async(e, id) => {
-        //console.log(id)
+    const deletePostById= async(e, _id) => {
+        // console.log(id);
+        console.log(_id);
         if(window.confirm('Are you sure you want to delete this post')){
             try{
-                const {data} = await axios.delete(`/api/delete/post/${id}`);
+                const {data} = await axios.delete(`/api/delete/post/${_id}`);
                 if(data.success === true){
                     toast.success(data.message);
                     displayPost();
                 }
             }catch(error){
                 console.log(error);
-                toast.error(error);
+                toast.error('Failed to delete post');
             }
         }
-    }
+    };
 
     const columns =[
         {
@@ -65,15 +86,15 @@ const AdminDashboard = () => {
         },
         {
             field: 'title',
-            headerName: 'Poset title',
+            headerName: 'Post title',
             width: 150
         },
         {
             field: 'image',
             headerName: 'Image',
             width: 150,
-            renderCell: (params) => (
-                <img width="40%" src={params.row.image.url} alt="" />
+            renderCell: (params) => ( params.row.image && params.row.image.url ?
+                <img width="40%" src={params.row.image.url} alt="" /> : null
             )
         },
         {
@@ -94,7 +115,7 @@ const AdminDashboard = () => {
             field: 'postedBy',
             headerName: 'Posted By',
             width: 150,
-            valuebetter: (data) => data.row.postedBy.name
+            valueGetter: (data) => data.row.postedBy ? data.row.postedBy.name : ''
         },
         {
             field: 'createdAt',
@@ -111,7 +132,7 @@ const AdminDashboard = () => {
             <Box sx={{display: 'flex', justifyContent: 'space-between', width: '170px'}}>
                 <Link to={`/admin/post/edit/${value.row._id}`}>
                     <IconButton aria-label="edit">
-                        <EditIcon  sx={{color: 'e1976d2'}} />
+                        <EditIcon  sx={{color: '#1976d2'}} />
                     </IconButton>
                 </Link>
                 <IconButton aria-label="delete" onClick={(e) => deletePostById(e, value.row._id)}>
@@ -143,9 +164,10 @@ const AdminDashboard = () => {
                 </Box>
                 <Paper sx={{bgcolor:'white'}}>
                     <Box sx={{height: 400, width: '100%'}}>
-                        <DataGrid getRowId={(row) => row._id} 
+                        {loading? ( <div>Loading...</div>) :(
+                        <DataGrid getRowId={(row) => row._id || row.id} 
                             sx={{
-                                '& .MuiTablePagination-displayedRow':{
+                                '& .MuiTablePagination-displayedRow': {
                                 color: 'black',
                             },
                             color: 'black',
@@ -159,7 +181,7 @@ const AdminDashboard = () => {
                             rowsPerPageOptions={[3]}
                             checkboxSelection
                         />
-
+                        )}
                     </Box>
 
                 </Paper>

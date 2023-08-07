@@ -1,42 +1,28 @@
-// import React from 'react';
-// import CreatePost from '../CreatePost';
-// import EditPost from '../EditPost';
-// import AdminDashboard from '../AdminDashboard';
-// import UserDashboard from '../../user/UserDashboard';
-// import Layout from './Layout';
+import React, { useState } from 'react';
+import { BiMenu, BiX } from 'react-icons/bi';
 
-//     const AdminDashboardB = () => {
-//         return (
-//           <Layout>
-//             <AdminDashboard />
-//           </Layout>
-//         );
-//       };
-      
-//       const CreatePostB = () => {
-//         return (
-//           <Layout>
-//             <CreatePost />
-//           </Layout>
-//         );
-//       };
-      
-//       const EditPostB = () => {
-//         return (
-//           <Layout>
-//             <EditPost />
-//           </Layout>
-//         );
-//       };
-      
-//       const UserDashboardB = () => {
-//         return (
-//           <Layout>
-//             <UserDashboard />
-//           </Layout>
-//         );
-//       };
-      
+const Top = ({ toggleSidebar }) => {
+  const [showMenu, setShowMenu] = useState(false);
 
+  const handleToggleSidebar = () => {
+    setShowMenu(!showMenu);
+    toggleSidebar(!showMenu);
+  };
 
-// export { AdminDashboardB, CreatePostB, EditPostB, UserDashboardB };
+  return (
+    <div className="bg-white shadow">
+      <div className="flex items-center justify-between px-4 py-3">
+       
+            <button
+            className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+            onClick={handleToggleSidebar}
+            >
+            {showMenu ? <BiX /> : <BiMenu />}
+            </button>
+
+      </div>
+    </div>
+  );
+};
+
+export default Top;

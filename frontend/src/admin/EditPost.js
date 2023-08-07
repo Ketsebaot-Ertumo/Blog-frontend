@@ -81,7 +81,7 @@ const EditPost = () => {
             const {data}= await axios.post(`/api/update/post/${id}`, values);
             if (data.success=== true){
                 toast.success('post updated');
-                navigate('/user/dashboard')
+                navigate('/user/userProfile')
                 navigate('/admin/dashboard')
             }
         }catch(error){

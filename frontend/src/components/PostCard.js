@@ -23,15 +23,29 @@ const PostCard = ({
     image, content, comments, 
     likes, showPosts, likesId
 }) => {
-
+  // console.log(id);
     const {userInfo}= useSelector(state => state.signIn);
+
+    //  //add Comment
+    //  const addComment= async() => {
+    //   try{
+    //     const {data}= await axios.put(`/api/comment/post/${id}`);
+    //     // console.log("Comment", data.post);
+    //     if(data.success === true){
+    //       showPosts();
+    //     }
+    //   }catch(error){
+    //     console.log(error);
+    //     toast.error(error.response.data.error);
+    //   }
+    // }
 
         //add like
       const addLike= async() => {
         try{
-          const {data}= await axios.put(`/api/like/post/${id}`);
-          //console.log("likes", data.post);
-          if(data.success == true){
+          const {data}= await axios.put(`/api/addlike/post/${id}`);
+          console.log("likes", data.post);
+          if(data.success === true){
             showPosts();
           }
         }catch(error){
@@ -44,8 +58,8 @@ const PostCard = ({
       const removeLike= async() => {
         try{
           const {data}= await axios.put(`/api/removeLike/post/${id}`);
-          //console.log("remove like", data.post);
-          if(data.success == true){
+          console.log("remove like", data.post);
+          if(data.success === true){
             showPosts();
           }
         }catch(error){
@@ -78,8 +92,10 @@ const PostCard = ({
           <CardContent>
           <Typography variant="body2" color="text.secondary">
             {/*Content here*/}
-            <Box component='span' dangerouslySetInnerHTML={{ __html:content.split(" ").slice(0, 10).join(" ") + "..."}}></Box>
-          </Typography>
+            <Box component='span' dangerouslySetInnerHTML={{ __html: (content).split(" ").slice(0, 10).join(" ") + "..."}}></Box>
+            {/* {content && (
+            <Box component='span' dangerouslySetInnerHTML={{ __html:content.split(" ").slice(0, 10).join(" ") + "..."}}></Box>)} */}
+            </Typography>
         </CardContent>
 
         <CardActions>
@@ -87,6 +103,7 @@ const PostCard = ({
                   
                 <Box>
                  { likesId.includes(userInfo && userInfo.id) ?
+                //  { likesId ?
                       <IconButton onClick={removeLike} aria-label='remove from favorites'>
                            <FavoriteBorderIcon sx={{ color: 'red'}} />
                       </IconButton>
@@ -96,14 +113,17 @@ const PostCard = ({
                       </IconButton>
                 
                   }
-                   {likes}Like(s)
+                   {likes} Like(s)
                 </Box>
 
                 <Box>
-                  {comments}
+                  {comments} 
                   <IconButton aria-label="comment">
                     <CommentIcon />
                   </IconButton>
+                  {/* <IconButton onClick={addComment} aria-label="write comment">
+                    <CommentIcon />
+                  </IconButton> */}
                 </Box>
 
           </Box>

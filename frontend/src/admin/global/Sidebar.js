@@ -4,9 +4,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Box } from "@mui/material";
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import Person3Icon from '@mui/icons-material/Person3';
+import PeoplesIcon from '@mui/icons-material/PeopleSharp'
 import { Link } from "react-router-dom"; 
 import { useDispatch, useSelector } from "react-redux";
-import {userLogoutAction, userProfileAction} from '../../redux/actions/userAction';
+import {userLogoutAction, showProfileAction} from '../../redux/actions/userAction';
 import { useNavigate } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 
@@ -17,9 +18,10 @@ const SidebarAdm = () => {
     const dispatch = useDispatch();
     const navigate= useNavigate();
 
-    useEffect(() => {
-        dispatch(userProfileAction());
-    }, []);
+    // useEffect(() => {
+    //     dispatch(showProfileAction());
+    // },
+    //  []);
 
     //log out
     const logOut = () => {
@@ -58,11 +60,12 @@ const SidebarAdm = () => {
                                 {
                                     userInfo && userInfo.role === 'admin' ?
                                     <>
-                                        <MenuItem component={<Link to="/admin/dashboard" />} icon={<DashboardIcon /> }>Dashboard</MenuItem>
+                                        <MenuItem component={<Link to="/admin/dashboard" />} icon={<DashboardIcon /> }>Admin Dashboard</MenuItem>
                                         <MenuItem component={<Link to="/admin/post/create" />} icon={<PostAddIcon />}>Create Post</MenuItem>
+                                        <MenuItem component={<Link to="/admin/usersList" />} icon={<PeoplesIcon />}>Users List</MenuItem>
                                     </>:
                                     <>
-                                    <MenuItem component={<Link to="/user/profile" />} icon={<DashboardIcon />}>Dashboard</MenuItem>
+                                    <MenuItem component={<Link to="/user/profile" />} icon={<DashboardIcon />}>User Dashboard</MenuItem>
                                     <MenuItem component={<Link to="/user/post/create" />} icon={<PostAddIcon />}>Create Post</MenuItem>
                                     </>
                             }
@@ -75,6 +78,9 @@ const SidebarAdm = () => {
                                         button:{
                                             [`&.${menuClasses.button}`]:{
                                                 color: '#000',
+                                            },
+                                            [`&.${menuClasses.disabled}`]: {
+                                                color: "green",
                                             },
                                             '&:hover': {
                                                 backgroundColor: '#fafafa',

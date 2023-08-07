@@ -17,6 +17,7 @@ import AdminDashboard from './admin/AdminDashboard';
 import EditPost from './admin/EditPost';
 import UserProfile from './user/userProfile';
 import CreatePost from './admin/CreatePost';
+import UsersList from './admin/UsersList';
 
 
 
@@ -24,6 +25,7 @@ import CreatePost from './admin/CreatePost';
 const AdminDashboardHOC = Layout(AdminDashboard);
 const CreatePostHOC = Layout(CreatePost);
 const EditPostHOC = Layout(EditPost);
+const UsersListHOC = Layout(UsersList);
 const UserProfileHOC = Layout(UserProfile);
 
 
@@ -43,6 +45,7 @@ const App = () => {
                 <Route path='/admin/dashboard' element={<AdminRoute><AdminDashboardHOC /></AdminRoute>} />
                 <Route path='/admin/post/create' element={<AdminRoute><CreatePostHOC /></AdminRoute>} />
                 <Route path='/admin/post/edit/:id' element={<AdminRoute><EditPostHOC /></AdminRoute>} />
+                <Route path='/admin/users' element={<AdminRoute><UsersListHOC /></AdminRoute>} />
                 <Route path='/user/profile' element={<UserRoute><UserProfileHOC /></UserRoute>} />
                 <Route path='/user/post/create' element={<UserRoute><CreatePostHOC /></UserRoute>} />
                 <Route path='/user/post/edit/:id' element={<UserRoute><EditPostHOC /></UserRoute>} />

@@ -23,6 +23,25 @@ const validationSchema =yup.object({
 });
 
 const CreatePost = () => {
+    const [posts, setPosts] = useState([]);
+
+        const createNewPost = async(values) => {
+            //console.log(values);
+            try{
+                // const data = await axios.post('/api/post/create', values);          
+                // setPosts([...posts, data]); 
+
+                const response = await axios.post('/api/post/create', values);                  //err
+                //console.log(response)                 
+                const newPost = response.data.post;
+                setPosts([...posts, newPost]);
+                toast.success('post created successfully!');
+            }catch(error){
+                console.log(error, values);
+                //toast.error(error.message);
+                toast.error('Failed to create post. Please try again.' || error.message);
+            }
+        }
 
     const {
         values, 
@@ -40,68 +59,46 @@ const CreatePost = () => {
 
             validationSchema : validationSchema,
             onSubmit: (values, actions) => {
-                    createNewPost(values, actions);
+                    // createNewPost(values, actions);
+                    createNewPost(values);
                     //alert(JSON.stringify(values, null, 2));
                     actions.resetForm();
 
             }
         });
 
-        const [posts, setPosts] = useState([]);
+        
+
+
 
         // const createNewPost = async(values) => {
-        //     //console.log(values);
-        //     try{
-        //         // const data = await axios.post('/api/post/create', values);          //err
-        //         // setPosts([...posts, data]); 
-
-        //         const response = await axios.post('/api/post/create', values);
+        //     try {
+        //         const formData = new FormData();
+        //         formData.append('title', values.title);
+        //         formData.append('content', values.content);
+        //         formData.append('image', values.image);
+            
+        //         const response = await axios.post('/api/post/create', formData, {
+        //           headers: {
+        //             'Content-Type': 'multipart/form-data',
+        //           },
+        //         });
+            
         //         const newPost = response.data.post;
         //         setPosts([...posts, newPost]);
-        //                                                  //err
-        //         toast.success('post created');
-        //     }catch(error){
-        //         console.log(error, values);
-        //         toast.error(error);
-        //     }
-
-        //     // axios.post('/api/post/create', values)
-        //     //     .then(res=>{ console.log(res) })
-        //     //     .catch(err=>{ console.log(err)
-        //     //         })
-        // }
-
-        const createNewPost = async(values) => {
-            try {
-                const formData = new FormData();
-                formData.append('title', values.title);
-                formData.append('content', values.content);
-                formData.append('image', values.image);
-            
-                const response = await axios.post('/api/post/create', formData, {
-                  headers: {
-                    'Content-Type': 'multipart/form-data',
-                  },
-                });
-            
-                const newPost = response.data.post;
-                setPosts([...posts, newPost]);
-            
-                toast.success('Post created successfully');
-              } catch (error) {
-                console.log(error);
-                toast.error(error.message || 'Failed to create post');
-              }
-            };
-
-        
+        //         toast.success('Post created successfully');
+        //       } catch (error) {
+        //         console.log(error);
+        //         toast.error('Failed to create post' || error.message);
+        //       }
+        //     };
 
 
     return(
         <>
           <Box sx={{bgcolor:"white", padding: "20px 200px"}}>
               <Typography variant="h5" sx={{pb:4}}>Create Post</Typography>
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt:1}}>
+              <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt:1}} encType="multipart/form-data">
                 <TextField sx={{mb:3}}
                     fullWidth
                     id="title"
@@ -135,45 +132,48 @@ const CreatePost = () => {
                         acceptedFiles=".jpg, .jpeg, .png, .jpng, .mp4"
                         multiple={false}
                         //maxFiles={3}
-                        onDrop={(acceptedFiles) =>
-                            acceptedFiles.map((file, index) =>{
-                                //setFieldValue('image',file);
-                                const reader= new FileReader();
-                                reader.readAsDataURL(file);
-                                reader.onloadend= () =>{
-                                    setFieldValue('image', reader.result)
-                                     }
-                            })}  
+                        onDrop={(acceptedFiles) => {
+                            const file = acceptedFiles[0];
+                            setFieldValue("image", file);
+                        }}
+                        // onDrop={(acceptedFiles) =>
+                        //     acceptedFiles.map((file, index) =>{
+                        //         const reader= new FileReader();
+                        //         reader.readAsDataURL(file);
+                        //         reader.onloadend= () =>{
+                        //             setFieldValue('image', reader.result)
+                        //              };
+                        //     })}  
                     >
                         {({getRootProps, getInputProps, isDragActive}) =>(
                             <Box
                                 {...getRootProps()}
 
                                 p="1rem"
-                                sx= {{'&:hover': {cursor: "pointer"}, bgcolor: isDragActive ? "#cceffc" : "#fafafa "}}
+                                sx= {{"&:hover": {cursor: "pointer"}, bgcolor: isDragActive ? '#cceffc' : '#fafafa'}}
                             >
                                 <input {...getInputProps()} />
                                 {
-                                   isDragActive ? 
+                                   isDragActive ? (
                                    <>
                                     <p style={{textAlign: "center"}}><CloudUploadIcon sx={{color:"primary.main", mr:2}} /></p>
                                     <p style={{textAlign:"center", fontSize:"12px"}} > Drag here!</p>
                                   
-                                   </> :
+                                   </>) :
 
-                                values.image === null ?
+                                   values.image === null ?(
 
                                    <>
                                         <p style={{textAlign: "center"}}><CloudUploadIcon sx={{color:"primary.main", mr:2}} /></p>
                                         <p style={{textAlign:"center", fontSize:"12px"}} > Drag and Drop image here or click to choose!</p>
-                                   </> :
+                                   </>) :(
 
                                    <>
                                       <Box sx={{display: "flex", justifyContent: 'space-around', alignItems: 'center'}}>
                                         <Box><img style={{maxWidth: '100px'}} src={values.image} alt="" /></Box>
                                       </Box>  
                                    </>
-                                }
+                               ) }
                                 
                             </Box> 
                         )}
@@ -194,7 +194,7 @@ const CreatePost = () => {
           
           </Box>
         </>
-    )
+    );
        
     
 }

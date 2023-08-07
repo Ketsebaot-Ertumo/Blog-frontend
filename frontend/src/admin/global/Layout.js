@@ -1,17 +1,25 @@
 import { Box} from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import SidebarAdm from './Sidebar';
-
+import Top from './HeaderTop'
 
 
 
 const Layout= (Component) => ({...props}) => {
+
+    // const [showSidebar, setShowSidebar] = useState(true);
+    // const handleToggleSidebar = (value) => {
+    //   setShowSidebar(value);
+    // };
+
     return(
         <>
             <div style={{display:'flex', minHeight: "100vh"}}>
+                {/* <SidebarAdm showSidebar={showSidebar} /> */}
                 <SidebarAdm />
                 <Box sx={{width: "100%", bgcolor: "#fafafa"}}>
-                    {/* /<HeaderTop /> */}
+                    {/* <Top toggleSidebar={handleToggleSidebar} showSidebar={showSidebar} /> */}
+                    <Top />
                     <Box sx={{p:3}}>
                         <Component {...props} />
                     </Box>

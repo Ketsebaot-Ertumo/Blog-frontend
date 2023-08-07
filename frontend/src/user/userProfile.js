@@ -18,18 +18,19 @@ import {toast} from 'react-toastify';
 
 const UserProfile=() =>{
   const [user, setUser] = useState({});
+  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
   const [previewProfilePicture, setPreviewProfilePicture] = useState(null);
   const [posts, setPosts] = useState([]);
 
   
-  //show posts by id for user
+  //show posts by id of user
   const displayPost= async(postId) => {
         console.log(postId);
        
         try{
-          //await axios.get(`/api/posts/show/${id}`);                 //err
+          //await axios.get(`/api/posts/show/${id}`);                 
           const {response}= await axios.get(`/api/posts/show/${postId}`);
           //axios.get(`/api/posts/show?postedBy=${res.data._id}`)
           console.log(response.data)
@@ -50,7 +51,7 @@ const UserProfile=() =>{
       })
 
 
-//   //show posts
+//   //show posts of user
 // useEffect(() => {
 //   axios.get('/api/me').then((res) => {
 //       setUser(res.data);
@@ -96,7 +97,7 @@ const UserProfile=() =>{
         const formData = new FormData();
         formData.append('name', name);
         formData.append('profilePicture', profilePicture);
-        axios.patch('/api/me', formData).then((res) => {
+        axios.put('/api/me', formData).then((res) => {
           setUser(res.data);
     });
   };

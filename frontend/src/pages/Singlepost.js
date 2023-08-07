@@ -1,4 +1,5 @@
 import React from "react";
+import {Link, useParams} from 'react-router-dom';
 import  Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia  from "@mui/material/CardMedia";
@@ -8,13 +9,12 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import FvoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CommentIcon from '@mui/icons-material/Comment';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Box, Button, Divider } from "@mui/material";
 import axios from "axios";
-import {Link, useParams} from 'react-router-dom';
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -40,12 +40,15 @@ const Singlepost= () =>{
     //const [likes, setLikes]= useState([]),
 
     const {id}= useParams();
+    // const postId = id ? id : '';
+    const postId = id ? id.toString() : '';
 
     //fetch single post
     const dispalySinglePost= async () => {
         setLoading(true);
+        console.log(params);
         try{
-            const {data}= await axios.get(`/api/post/${id}`);
+            const {data}= await axios.get(`/api/post/${postId}`);
             //console.log(data);
             setTitle(data.post.title);
             setContent(data.post.content);
@@ -69,7 +72,7 @@ const Singlepost= () =>{
     const addComment= async (e) => {
         e.preventDefault();
         try{
-            const {data} = await axios.put(`/api/comment/post/${id}`, {comment});
+            const {data} = await axios.put(`/api/comment/post/${postId}`, {comment});
             if(data.success === true){
                 setComment('');
                 toast.success("comment added");

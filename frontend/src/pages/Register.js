@@ -28,18 +28,20 @@ const validationSchema= yup.object({
         .min(8, 'Password should be of minimum 8 chars length')
         .required('Password is required'),
 });
+
 const Register= () =>{
 
     const dispatch= useDispatch();
     const navigate= useNavigate();
     
-    const {loading, isAuthenticated, userInfo}= useSelector(state=> state.signUp);
+    const {loading, isAuthenticated, userSignUp}= useSelector(state=> state.signUp);
+    
     useEffect(() =>{
         if (isAuthenticated) {
-            if (userInfo.role === 'admin') {
+            if (userSignUp.role === 'admin') {
                 navigate('/admin/dashboard');
             }else{
-                navigate('/user/dashboard');
+                navigate('/user/profile');
              } }
     //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated])
@@ -47,7 +49,8 @@ const Register= () =>{
     const formik= useFormik({
         initialValues: {
             email: '',
-            password: ''
+            password: '',
+            name:''
         },
         validationSchema: validationSchema,
         onSubmit: (values, actions) => {
@@ -56,6 +59,7 @@ const Register= () =>{
             actions.resetForm();
         }
     })
+
     return(
         <>
         <Navbar />
@@ -76,12 +80,12 @@ const Register= () =>{
                           }}
                           fullWidth
                           id="email"
-                          label="Email"
+                          label="Email Address"
                           name='email'
                           InputLabelProps={{
                             shrink: true,
                           }}
-                          placeholder="E-mail"
+                          placeholder="E-mail Adress"
                           value={formik.values.email}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
@@ -136,6 +140,7 @@ const Register= () =>{
                 />
              
              <Button disabled={loading} fullWidth variant="contained" type="submit">{loading ? "Loading...":"Sign Up" }</Button>
+             <p>Already have an Account, <a href="/LogIn">Login.</a></p>
            </Box>
         </Box>
       </Box>
