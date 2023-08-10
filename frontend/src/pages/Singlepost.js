@@ -40,15 +40,15 @@ const Singlepost= () =>{
     //const [likes, setLikes]= useState([]),
 
     const {id}= useParams();
-    // const postId = id ? id : '';
-    const postId = id ? id.toString() : '';
+    // // const postId = id ? id : '';
+    // const postId = id ? id.toString() : '';
 
     //fetch single post
-    const dispalySinglePost= async () => {
+    const dispalySinglePost= async (id) => {
         setLoading(true);
         console.log(id);
         try{
-            const {data}= await axios.get(`/api/post/${postId}`);
+            const {data}= await axios.get(`/api/post/${id}`);
             //console.log(data);
             setTitle(data.post.title);
             setContent(data.post.content);
@@ -72,7 +72,7 @@ const Singlepost= () =>{
     const addComment= async (e) => {
         e.preventDefault();
         try{
-            const {data} = await axios.put(`/api/comment/post/${postId}`, {comment});
+            const {data} = await axios.put(`/api/comment/post/${id}`, {comment});
             if(data.success === true){
                 setComment('');
                 toast.success("comment added");
