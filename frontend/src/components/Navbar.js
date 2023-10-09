@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const pages = ['Home', 'Log In'];
+const pages = ['Home','Register', 'Log In'];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -27,11 +27,11 @@ const Navbar = () => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);    //err
+    setAnchorElUser(event.currentTarget);    
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);                   //err
+    setAnchorElNav(null);                   
   };
 
   const handleCloseUserMenu = () => {
@@ -137,6 +137,13 @@ const Navbar = () => {
                   Register
                 </Link>
             </Typography>
+            <Typography 
+              onClick={handleCloseNavMenu} 
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Link to="/Signin" style={{color: 'white', textDecoration: "none"}}>
+                  LogIn
+                </Link>
+            </Typography>
 
       </Box>
 
@@ -145,7 +152,7 @@ const Navbar = () => {
               <IconButton 
                 onClick={handleOpenUserMenu}          
                 sx={{ p: 0 }}>
-                <Avatar alt="Ke er" src="" />
+                <Avatar alt="" src="" />
               </IconButton>
             </Tooltip>
            
@@ -179,11 +186,15 @@ const Navbar = () => {
                 </Typography>
               </MenuItem>
 
-          
-
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center">
                     <Link style={{textDecoration: "none"}} to="/login">LogIn</Link>
+                </Typography>
+              </MenuItem>
+
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">
+                    <Link style={{textDecoration: "none"}} to="/register">Register</Link>
                 </Typography>
               </MenuItem>
 

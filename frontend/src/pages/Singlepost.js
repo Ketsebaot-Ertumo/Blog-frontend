@@ -40,16 +40,19 @@ const Singlepost= () =>{
     //const [likes, setLikes]= useState([]),
 
     const {id}= useParams();
+
+    // console.log(`${id}`);
     // // const postId = id ? id : '';
     // const postId = id ? id.toString() : '';
 
     //fetch single post
     const dispalySinglePost= async (id) => {
+        // console.log('Singlepost component rendered');
         setLoading(true);
         console.log(id);
         try{
             const {data}= await axios.get(`/api/post/${id}`);
-            //console.log(data);
+            // console.log(id);
             setTitle(data.post.title);
             setContent(data.post.content);
             setImage(data.post.image.url);
@@ -64,8 +67,8 @@ const Singlepost= () =>{
 
 
     useEffect(() => {
-        dispalySinglePost();
-    }, [])
+        dispalySinglePost(id);
+    }, [id])
 
     
     //add comment
@@ -78,7 +81,7 @@ const Singlepost= () =>{
                 toast.success("comment added");
                 dispalySinglePost();
             }
-            //console.log("comment post", data.post);
+            console.log("comment post", data.post);
         }catch(error){
             console.log(error);
             toast.error(error);
@@ -122,16 +125,16 @@ return(
                             <Divider variant='inset' />
                             {/* add comment list */}
                             {
-                                Comments.length === 0 ? '' : 
+                                Comments.length === 0 ? '' : (
                                     <Typography variant="h5" sx={{pt: 3, mb: 2}}>
                                         Comments: 
                                     </Typography>
-                            }
+                            )}
                             {
-                                Comments.map(comment => {
+                                Comments.map(comment => (
                                     <CommentList key={comment._id} name={comment.postedBy.name} text={comment.text} />
 
-                                })
+                                ))
                             }
                             {
                                 userInfo ? 

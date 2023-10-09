@@ -60,7 +60,7 @@ const EditPost = () => {
         const singlePostById= async () => {
             //console.log(id);
             try{
-                const {data}= await axios.get(`/api/post/${id}`);
+                const {data}= await axios.put(`/api/post/${id}`);
                 setTitle(data.post.title);
                 setContent(data.post.content);
                 setImagePreview(data.post.image.url);
@@ -76,13 +76,36 @@ const EditPost = () => {
     }, []);
 
 
+    //show all posts
+    const displayPost= async () => {
+        setLoading(true);
+        try{
+            const {data} = await axios.get('/api/posts/show');
+            setPosts(data.posts);
+            setLoading(false);
+        }catch(error){
+            console.log(error);
+            toast.error('Failed to fetch posts.');
+            setLoading(false);
+        }
+    }
+    useEffect(() =>{
+        displayPost();
+    }, []);
+
+
+    //update/edit a post
     const updatePost= async (values) => {
         try{
             const {data}= await axios.post(`/api/update/post/${id}`, values);
             if (data.success=== true){
                 toast.success('post updated');
-                navigate('/user/userProfile')
-                navigate('/admin/dashboard')
+                
+                // if(user.role === 'user'){
+                // navigate('/user/userProfile')}
+                // else{
+                // navigate('/admin/dashboard')}
+                    //
             }
         }catch(error){
             console.log(error);

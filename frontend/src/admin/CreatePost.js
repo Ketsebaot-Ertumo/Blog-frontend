@@ -9,16 +9,17 @@ import ReactQuill from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 import {modules}  from '../components/moduleToolbar';
 import { toast } from "react-toastify";
+// import dataUriToFile from 'data-uri-to-file';
 
 
 const validationSchema =yup.object({
     title: yup
         .string('Add a Post Title')
-        .min(4, 'text content should have min of 4 char.s')
+        .min(4, 'text content should have min of 4 chars')
         .required('Post title is required'),
     content: yup
         .string('Add text content')
-        .min(10, 'Text content should have minimum of 10 char.s')
+        .min(10, 'Text content should have minimum of 10 chars')
         .required('text content is required'),
 });
 
@@ -26,22 +27,41 @@ const CreatePost = () => {
     const [posts, setPosts] = useState([]);
 
         const createNewPost = async(values) => {
-            //console.log(values);
+            console.log(values);
             try{
-                // const data = await axios.post('/api/post/create', values);          
+                // const {data} = await axios.post('/api/post/create', values);          
                 // setPosts([...posts, data]); 
 
-                const response = await axios.post('/api/post/create', values);                  //err
-                //console.log(response)                 
-                const newPost = response.data.post;
-                setPosts([...posts, newPost]);
+                // try {
+                    const formData = new FormData();
+                    formData.append('title', values.title);
+                    formData.append('content', values.content);
+                    // formData.append('postedBy', 'req.body.postedBy');
+                    formData.append('file', values.file);
+                    // formData.append('file', dataUriToFile(values.image, 'image')); // Convert Base64 to File
+                
+                    const response = await axios.post('/api/post/create', formData, {
+                      headers: {
+                        'Content-Type': 'multipart/form-data',
+                      },
+                    });
+                
+                    const newPost = response.data.savedPost;
+                    setPosts([...posts, newPost]);
+
+
+                // const response = await axios.post('/api/post/create', values);                  //err
+                // console.log(response)                 
+                // const newPost = response.data.post;
+                // console.log(data)
+                // setPosts([...posts, newPost]);
                 toast.success('post created successfully!');
             }catch(error){
                 console.log(error, values);
                 //toast.error(error.message);
                 toast.error('Failed to create post. Please try again.' || error.message);
             }
-        }
+        };
 
     const {
         values, 
@@ -54,7 +74,7 @@ const CreatePost = () => {
             initialValues: {
                 title: '',
                 content: '',
-                image: null,
+                file: null,
             },
 
             validationSchema : validationSchema,
@@ -67,31 +87,7 @@ const CreatePost = () => {
             }
         });
 
-        
-
-
-
-        // const createNewPost = async(values) => {
-        //     try {
-        //         const formData = new FormData();
-        //         formData.append('title', values.title);
-        //         formData.append('content', values.content);
-        //         formData.append('image', values.image);
-            
-        //         const response = await axios.post('/api/post/create', formData, {
-        //           headers: {
-        //             'Content-Type': 'multipart/form-data',
-        //           },
-        //         });
-            
-        //         const newPost = response.data.post;
-        //         setPosts([...posts, newPost]);
-        //         toast.success('Post created successfully');
-        //       } catch (error) {
-        //         console.log(error);
-        //         toast.error('Failed to create post' || error.message);
-        //       }
-        //     };
+    
 
 
     return(
@@ -134,7 +130,7 @@ const CreatePost = () => {
                         //maxFiles={3}
                         onDrop={(acceptedFiles) => {
                             const file = acceptedFiles[0];
-                            setFieldValue("image", file);
+                            setFieldValue("file", file);
                         }}
                         // onDrop={(acceptedFiles) =>
                         //     acceptedFiles.map((file, index) =>{
@@ -161,7 +157,7 @@ const CreatePost = () => {
                                   
                                    </>) :
 
-                                   values.image === null ?(
+                                   values.file === null ?(
 
                                    <>
                                         <p style={{textAlign: "center"}}><CloudUploadIcon sx={{color:"primary.main", mr:2}} /></p>
@@ -170,7 +166,7 @@ const CreatePost = () => {
 
                                    <>
                                       <Box sx={{display: "flex", justifyContent: 'space-around', alignItems: 'center'}}>
-                                        <Box><img style={{maxWidth: '100px'}} src={values.image} alt="" /></Box>
+                                        <Box><img style={{maxWidth: '100px'}} src={values.file} alt="" /></Box>
                                       </Box>  
                                    </>
                                ) }

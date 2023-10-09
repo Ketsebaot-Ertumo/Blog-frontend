@@ -1,82 +1,255 @@
-// import { Fragment, useState } from 'react'
-// import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import HouseIcon from '@mui/icons-material/House';
+import PeoplesIcon from '@mui/icons-material/PeopleSharp'
+import { Link } from 'react-router-dom';
 
-// const profile = ({ userProfile }) => {
-//   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-//   const toggleDropdown = () => {
-//     setIsDropdownOpen(!isDropdownOpen)
-//   }
+//const [user, setUser] = useState([]);
+const [user, setUser] = useState({});
+const [email, setEmail] = useState('');
+const [name, setName] = useState('');
+const [profilePicture, setProfilePicture] = useState(null);
 
-//   return (
-//     <nav className="bg-white shadow">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         <div className="flex justify-between h-16">
-//           <div className="flex-shrink-0 flex items-center">
-//             <Link to="/" className="text-gray-800 font-bold text-xl">
-//               Blog Platform
-//             </Link>
-//           </div>
-//           <div className="flex items-center">
-//             {userProfile && (
-//               <Fragment>
-//                 <div className="hidden sm:block">
-//                   <img
-//                     src={userProfile.profilePicture}
-//                     alt="Profile"
-//                     className="h-8 w-8 rounded-full"
-//                   />
-//                   <Link
-//                     to={`/users/${userProfile.id}`}
-//                     className="ml-3 text-gray-800 hover:text-gray-600 font-medium"
-//                   >
-//                     {userProfile.name}
-//                   </Link>
-//                 </div>
-//                 <div className="ml-4 relative sm:hidden">
-//                   <button
-//                     onClick={toggleDropdown}
-//                     className="flex text-gray-800 hover:text-gray-600 items-center focus:outline-none"
-//                   >
-//                     <img
-//                       src={user.profilePicture}
-//                       alt="Profile"
-//                       className="h-8 w-8 rounded-full"
-//                     />
-//                   </button>
-//                   {isDropdownOpen && (
-//                     <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-//                       <div
-//                         className="py-1"
-//                         role="menu"
-//                         aria-orientation="vertical"
-//                         aria-labelledby="user-menu"
-//                       >
-//                         <Link
-//                           to={`/users/${user.id}`}
-//                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-//                           role="menuitem"
-//                         >
-//                           Profile
-//                         </Link>
-//                         <button
-//                           onClick={logout}
-//                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-//                           role="menuitem"
-//                         >
-//                           Logout
-//                         </button>
-//                       </div>
-//                     </div>
-//                   )}
-//                 </div>
-//               </Fragment>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </nav>
-//   )
-// }
 
-// export default profile
+const pages = ['Home','Name','Email','Profile Picture',];
+
+const Profile = () => {
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);    
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);                   
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+
+  // const createProfilePicture= async(e, id) => {
+    //console.log(id)
+    const createProfilePicture = async (e, id) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('profilePicture', profilePicture);
+      
+      try {
+        const response = await axios.post('/api/me', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        if (response.data.success) {
+          toast.success(response.data.message);
+          displayPost();
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error);
+      }
+    };
+        // try{
+          
+        //     const {data} = await axios.post(`/api/me`, values);
+        //     if(data.success === true){
+        //         toast.success(data.message);
+        //         displayPost();
+        //     }
+        // }catch(error){
+        //     console.log(error);
+        //     toast.error(error);
+        // }
+    // }
+  }
+
+  return (
+    <AppBar position="static">
+      <Container>
+        {/*principal menu*/}
+        <Toolbar disableGutters>
+          <PeoplesIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            {name}  {email}
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}         
+              color="inherit">
+            <MenuIcon />
+            </IconButton>
+            
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}             
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {
+              pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">
+                          {page}
+                    </Typography>
+                  </MenuItem>
+              ))}
+           </Menu>
+        </Box>
+          <PeoplesIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            {name}  {email}
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                {/* menu desktop */}
+            
+                 {/* <Typography 
+                    onClick={handleCloseNavMenu} 
+                    sx={{ my: 2, color: 'white', display: 'block', mr: 2 }}>
+                    <Link to='/' style={{color: 'white', textDecoration: "none"} }>
+                    Home
+                    </Link>
+                </Typography> 
+                <Typography 
+                onClick={handleCloseNavMenu} 
+                sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <Link to="/Register" style={{color: 'white', textDecoration: "none"}}>
+                    Register
+                    </Link>
+                </Typography>
+                <Typography 
+                onClick={handleCloseNavMenu} 
+                sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <Link to="/Signin" style={{color: 'white', textDecoration: "none"}}>
+                    LogIn
+                    </Link>
+                </Typography> */}
+
+            </Box>
+
+        <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton 
+                onClick={handleOpenUserMenu}          
+                sx={{ p: 0 }}>
+                { profilePicture?(
+                  <Avatar alt="Profile Picture" src={profilePicture} />) : 
+                (<Avatar alt="" src="" />)}
+              </IconButton>
+            </Tooltip>
+           
+
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center" onClick={(e) => createProfilePicture(e, value.row._id)}>
+                {/* <Typography textAlign="center" onClick={createProfilePicture}></Typography> */}
+                    Create Profile Picture
+                    {/* <Link style={{textDecoration: "none"}} to="/admin/dashboard">Create Profile_picture</Link> */}
+                </Typography>
+              </MenuItem>
+              
+
+               <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">
+                    <Link style={{textDecoration: "none"}} to="/admin/dashboard">Edit Profile</Link>
+                </Typography>
+              </MenuItem> 
+
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">
+                    <Link style={{textDecoration: "none"}} to="/user/profile">Delete Profile_picture</Link>
+                </Typography>
+              </MenuItem>
+
+              {/* <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">
+                    <Link style={{textDecoration: "none"}} to="/login">LogIn</Link>
+                </Typography>
+              </MenuItem> */}
+
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+}
+export default Profile;

@@ -19,20 +19,7 @@ const AdminDashboard = () => {
     const [loading, setLoading] = useState(false);
     
     //show all posts
-    // const displayPost= async (res) => {
-    //     setLoading(true);
-    //     try{
-    //         const {data} = await axios.get('/api/posts/show');
-    //         setPosts(data.posts);
-    //         setLoading(false);
-    //     }catch(error){
-    //         console.log(error);
-    //         toast.error('Failed to fetch posts.');
-    //         setLoading(false);
-    //     }
-    // }
-
-    const displayPost= async (res) => {
+    const displayPost= async () => {
         setLoading(true);
         try{
             const {data} = await axios.get('/api/posts/show');
@@ -44,7 +31,6 @@ const AdminDashboard = () => {
             setLoading(false);
         }
     }
-
     useEffect(() =>{
         displayPost();
     }, []);

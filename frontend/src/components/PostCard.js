@@ -23,7 +23,7 @@ const PostCard = ({
     image, content, comments, 
     likes, showPosts, likesId
 }) => {
-  // console.log(id);
+  console.log(id);
     const {userInfo}= useSelector(state => state.signIn);
 
     //  //add Comment
@@ -73,7 +73,7 @@ const PostCard = ({
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              K
+              
             </Avatar>
           }
           title={title}
@@ -85,7 +85,7 @@ const PostCard = ({
               component="img" 
               height="194"
               image= {image}
-              alt="K"
+              alt=""
             />
           </Link>
 

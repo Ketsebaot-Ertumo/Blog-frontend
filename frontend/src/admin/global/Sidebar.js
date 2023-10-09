@@ -29,7 +29,7 @@ const SidebarAdm = () => {
         window.location.reload(true);
         setTimeout(() => {
             navigate('/');
-        }, 500)
+        }, 50)
     }
 
     return(

@@ -19,7 +19,7 @@ const Layout= (Component) => ({...props}) => {
                 <SidebarAdm />
                 <Box sx={{width: "100%", bgcolor: "#fafafa"}}>
                     {/* <Top toggleSidebar={handleToggleSidebar} showSidebar={showSidebar} /> */}
-                    <Top />
+                    {/* <Top /> */}
                     <Box sx={{p:3}}>
                         <Component {...props} />
                     </Box>

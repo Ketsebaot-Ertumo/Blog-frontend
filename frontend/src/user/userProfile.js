@@ -26,14 +26,11 @@ const UserProfile=() =>{
 
   
   //show posts by id of user
-  const displayPost= async(postId) => {
-        console.log(postId);
-       
+  const displayPost= async(userId) => {
+        console.log(userId);
         try{
           //await axios.get(`/api/posts/show/${id}`);                 
-          const {response}= await axios.get(`/api/posts/show/${postId}`);
-          //axios.get(`/api/posts/show?postedBy=${res.data._id}`)
-          console.log(response.data)
+          const {response}= await axios.get(`/api/posts/show/${userId}`);
           setPosts(response.data);
             }
          catch(error){
@@ -46,6 +43,7 @@ const UserProfile=() =>{
          setUser(res.data);
          displayPost(res.data._id);
          setName(res.data.name);
+         setEmail(res.data.email)
          
        }, []);
       })
@@ -79,7 +77,7 @@ const UserProfile=() =>{
             toast.error(error);
         }
     }
-}
+  }
 
 
 
@@ -164,9 +162,8 @@ const UserProfile=() =>{
                     <IconButton aria-label="delete" onClick={(e) => deletePostById(e, value.row._id)}>
                         <DeleteIcon sx={{color: "red"}} />
                     </IconButton>
-        </Box>
-            
-        )
+                </Box>
+            )
 
     }
        
@@ -175,9 +172,9 @@ const UserProfile=() =>{
   
   return (
     <div>
-      {/* <profile /> */}
-      <h1>{user.name}</h1>
-      <img src={previewProfilePicture || user.profilePicture} alt="Profile" />           
+      <profile />
+      {/* <h1>{user.name}</h1>
+      <img src={previewProfilePicture || user.profilePicture} alt="Profile" />            */}
       
       {/* {
       posts.map((post) => (
