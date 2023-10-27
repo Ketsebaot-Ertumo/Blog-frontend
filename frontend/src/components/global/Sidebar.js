@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {userLogoutAction, showProfileAction} from '../../redux/actions/userAction';
 import { useNavigate } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
+import axios from 'axios';
 
 
 
@@ -29,7 +30,7 @@ const SidebarAdm = () => {
         window.location.reload(true);
         setTimeout(() => {
             navigate('/');
-        }, 50)
+        }, 2)
     }
 
     return(

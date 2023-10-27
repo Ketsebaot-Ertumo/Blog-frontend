@@ -12,11 +12,11 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import AdminRoute from './components/AdminRoute';
 import UserRoute from './components/UserRoute';
-import Layout from './admin/global/Layout';
+import Layout from './components/global/Layout';
 import AdminDashboard from './admin/AdminDashboard';
-import EditPost from './admin/EditPost';
+import EditPost from './pages/EditPost';
 import UserProfile from './user/userProfile';
-import CreatePost from './admin/CreatePost';
+import CreatePost from './pages/CreatePost';
 import UsersList from './admin/UsersList';
 
 
@@ -45,7 +45,7 @@ const App = () => {
                 <Route path='/admin/dashboard' element={<AdminRoute><AdminDashboardHOC /></AdminRoute>} />
                 <Route path='/admin/post/create' element={<AdminRoute><CreatePostHOC /></AdminRoute>} />
                 <Route path='/admin/post/edit/:id' element={<AdminRoute><EditPostHOC /></AdminRoute>} />
-                <Route path='/admin/users' element={<AdminRoute><UsersListHOC /></AdminRoute>} />
+                <Route path='/admin/usersList' element={<AdminRoute><UsersListHOC /></AdminRoute>} />
                 <Route path='/user/profile' element={<UserRoute><UserProfileHOC /></UserRoute>} />
                 <Route path='/user/post/create' element={<UserRoute><CreatePostHOC /></UserRoute>} />
                 <Route path='/user/post/edit/:id' element={<UserRoute><EditPostHOC /></UserRoute>} />

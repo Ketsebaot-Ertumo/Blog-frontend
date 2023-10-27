@@ -39,26 +39,27 @@ const Singlepost= () =>{
     const [Comments, setComments]= useState([]);
     //const [likes, setLikes]= useState([]),
 
-    const {id}= useParams();
 
-    // console.log(`${id}`);
-    // // const postId = id ? id : '';
-    // const postId = id ? id.toString() : '';
+    // const _id= useParams();
+    const {id}= useParams();
+    // const postId = id._id;
+    // const {_id}=id;
+    console.log(userInfo);
 
     //fetch single post
     const dispalySinglePost= async (id) => {
-        // console.log('Singlepost component rendered');
+        console.log('Singlepost component rendered');
         setLoading(true);
-        console.log(id);
+        // console.log(_id);
         try{
             const {data}= await axios.get(`/api/post/${id}`);
-            // console.log(id);
+            console.log(Comments.length);
             setTitle(data.post.title);
             setContent(data.post.content);
             setImage(data.post.image.url);
             setCreatedAt(data.post.createdAt);
             setLoading(false);
-            setComments(data.post.Comments);
+            setComments(data.post.Comments || []);
             // setLikes(data.post.likes);
         }catch(error){
             console.log(error);
@@ -79,7 +80,7 @@ const Singlepost= () =>{
             if(data.success === true){
                 setComment('');
                 toast.success("comment added");
-                dispalySinglePost();
+                dispalySinglePost(id);
             }
             console.log("comment post", data.post);
         }catch(error){
@@ -109,7 +110,7 @@ return(
                             </IconButton>
                         }
                         title={title}
-                        subheader={moment(createdAt).format('MM DD, YYYY')}
+                        subheader={moment(createdAt).format('dddd, MMM DD, YYYY')}
                     />
                         <CardMedia
                             component='img'
@@ -124,7 +125,7 @@ return(
                             </Typography>
                             <Divider variant='inset' />
                             {/* add comment list */}
-                            {
+                            {   
                                 Comments.length === 0 ? '' : (
                                     <Typography variant="h5" sx={{pt: 3, mb: 2}}>
                                         Comments: 

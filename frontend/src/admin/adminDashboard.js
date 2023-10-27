@@ -10,6 +10,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {toast} from 'react-toastify';
 import { useState } from "react";
+import Profile from "../pages/Profile";
+import Loader from "../components/Loader";
 
 
 
@@ -108,7 +110,7 @@ const AdminDashboard = () => {
             headerName: 'Create At',
             width: 150,
             renderCell: (params) => (
-                moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS')
+                moment(params.row.createdAt).format('MMM DD, YYYY')
             )
         },
         {
@@ -137,7 +139,7 @@ const AdminDashboard = () => {
     return(
         <>
             <Box>
-
+                <Profile />
                 <Typography variant="h4" sx={{color: 'black', pb: 3}}>
                     Posts
                 </Typography>
@@ -150,7 +152,8 @@ const AdminDashboard = () => {
                 </Box>
                 <Paper sx={{bgcolor:'white'}}>
                     <Box sx={{height: 400, width: '100%'}}>
-                        {loading? ( <div>Loading...</div>) :(
+                        {/* {loading? ( <div>Loading...</div>) :( */}
+                        {loading? <Loader />:(
                         <DataGrid getRowId={(row) => row._id || row.id} 
                             sx={{
                                 '& .MuiTablePagination-displayedRow': {

@@ -15,21 +15,23 @@ import { useNavigate, useParams } from "react-router-dom";
 const validationSchema =yup.object({
     title: yup
         .string('Add a Post Title')
-        .min(4, 'text content should have min of 4 char.s')
-        .required('Post title is required'),
+        .min(4, 'text content should have min of 4 char.s'),
+        // .required('Post title is required'),
     content: yup
         .string('Add text content')
         .min(10, 'Text content should have minimum of 10 char.s')
-        .required('text content is required'),
+        // .required('text content is required'),
 });
 
 
 const EditPost = () => {
-    const {id} = useParams();
+    const {id}= useParams();
     const [title, setTitle]= useState('');
     const [content, setContent]= useState('');
     const [image, setImage]= useState('');
     const [imagePreview, setImagePreview]= useState('');
+    const [loading, setLoading]= useState(false);
+    const [posts, setPosts] = useState([]);
     const navigate= useNavigate();
 
     const {
@@ -43,7 +45,7 @@ const EditPost = () => {
             initialValues: {
                 title,
                 content,
-                image: '',
+                image,
             },
 
             validationSchema : validationSchema,
@@ -73,7 +75,7 @@ const EditPost = () => {
 
     useEffect(() => {
         singlePostById()
-    }, []);
+    }, [id])
 
 
     //show all posts
@@ -97,15 +99,19 @@ const EditPost = () => {
     //update/edit a post
     const updatePost= async (values) => {
         try{
-            const {data}= await axios.post(`/api/update/post/${id}`, values);
+            // console.log(id,values)
+            const {data}= await axios.put(`/api/update/post/${id}`, values);
+            console.log(data.postUpdated)
             if (data.success=== true){
                 toast.success('post updated');
                 
-                // if(user.role === 'user'){
-                // navigate('/user/userProfile')}
-                // else{
-                // navigate('/admin/dashboard')}
-                    //
+                // const userInfo= localStorage.getItem('userInfo')
+                const userInfoObject = JSON.parse(localStorage.getItem('userInfo'));
+                // console.log(userInfoObject);
+                if(userInfoObject.role === 'user'){
+                navigate('/user/userProfile')}
+                else{
+                navigate('/admin/dashboard')}
             }
         }catch(error){
             console.log(error);
@@ -146,18 +152,13 @@ const EditPost = () => {
                 </Box>
                 <Box border={"2px dashed blue"} sx={{p:1}}>
                     <Dropzone
-                        acceptedFiles=".jpg, .jpng, .png, jpeg, .mp4"
+                        acceptedFiles=".jpg, .jpeg, .png, .jpng, .mp4"
                         multiple={false}
                         //maxFiles={3}
-                        onDrop={(acceptedFiles) =>
-                            acceptedFiles.map((file, index) =>{
-                                const reader= new FileReader();
-                                reader.readAsDataURL(file);
-                                reader.onloadend= () =>{
-                                    setFieldValue('images', reader.result)
-                            }
-                          })
-                        }  
+                        onDrop={(acceptedFiles) => {
+                            const file = acceptedFiles[0];
+                            setFieldValue("file", file);
+                        }} 
                     >
                         
                         {({getRootProps, getInputProps, isDragActive}) =>(
@@ -204,7 +205,7 @@ const EditPost = () => {
                     sx={{mt:3, p:1,nmb:2, boarderRadius: "25px",}}
                 //disabled={loading}
                 >
-                    Create Post
+                    Edit Post
                 </Button>
                 </Box>
             

@@ -9,6 +9,7 @@ import ReactQuill from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 import {modules}  from '../components/moduleToolbar';
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 // import dataUriToFile from 'data-uri-to-file';
 
 
@@ -21,24 +22,29 @@ const validationSchema =yup.object({
         .string('Add text content')
         .min(10, 'Text content should have minimum of 10 chars')
         .required('text content is required'),
+    // file: yup
+    //     .object('Add image')
+    //     .required('image is required'),
 });
 
 const CreatePost = () => {
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const navigate= useNavigate();
+
 
         const createNewPost = async(values) => {
             console.log(values);
             try{
                 // const {data} = await axios.post('/api/post/create', values);          
-                // setPosts([...posts, data]); 
+                // setPosts([...posts, data.post]); 
 
                 // try {
                     const formData = new FormData();
                     formData.append('title', values.title);
                     formData.append('content', values.content);
-                    // formData.append('postedBy', 'req.body.postedBy');
-                    formData.append('file', values.file);
-                    // formData.append('file', dataUriToFile(values.image, 'image')); // Convert Base64 to File
+                    formData.append('image', values.image);
+                    // formData.append('file', dataUriToFile(values.file, 'file')); // Convert Base64 to File
                 
                     const response = await axios.post('/api/post/create', formData, {
                       headers: {
@@ -46,7 +52,7 @@ const CreatePost = () => {
                       },
                     });
                 
-                    const newPost = response.data.savedPost;
+                    const newPost = response.data.post;
                     setPosts([...posts, newPost]);
 
 
@@ -55,7 +61,14 @@ const CreatePost = () => {
                 // const newPost = response.data.post;
                 // console.log(data)
                 // setPosts([...posts, newPost]);
+                //if (data.success=== true){}
                 toast.success('post created successfully!');
+                const userInfoObject = JSON.parse(localStorage.getItem('userInfo'));
+                // console.log(userInfoObject);
+                if(userInfoObject.role === 'user'){
+                navigate('/user/userProfile')}
+                else{
+                navigate('/admin/dashboard')}
             }catch(error){
                 console.log(error, values);
                 //toast.error(error.message);
@@ -74,7 +87,7 @@ const CreatePost = () => {
             initialValues: {
                 title: '',
                 content: '',
-                file: null,
+                image: null,
             },
 
             validationSchema : validationSchema,
@@ -129,13 +142,13 @@ const CreatePost = () => {
                         multiple={false}
                         //maxFiles={3}
                         onDrop={(acceptedFiles) => {
-                            const file = acceptedFiles[0];
-                            setFieldValue("file", file);
+                            const image = acceptedFiles[0];
+                            setFieldValue("image", image);
                         }}
                         // onDrop={(acceptedFiles) =>
-                        //     acceptedFiles.map((file, index) =>{
+                        //     acceptedFiles.map((image, index) =>{
                         //         const reader= new FileReader();
-                        //         reader.readAsDataURL(file);
+                        //         reader.readAsDataURL(image);
                         //         reader.onloadend= () =>{
                         //             setFieldValue('image', reader.result)
                         //              };

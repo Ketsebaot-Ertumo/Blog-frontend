@@ -23,6 +23,8 @@ import PeoplesIcon from '@mui/icons-material/PeopleSharp'
 import EditIcon from '@mui/icons-material/Edit';
 import {toast} from 'react-toastify';
 import { useState } from "react";
+import Profile from "../pages/Profile";
+import Loader from "../components/Loader";
 
 
 
@@ -52,21 +54,15 @@ const UsersList = () => {
     }, []);
 
 
-    // //show all posts
-    // useEffect(()=>{
-    //     axios.get('/api/posts/show).then((res) => {
-    //         setPosts(res.data);
-    //     });
-    // }, []);
-
 
 
     //delete post by id
-    const deleteUserById= async(e, _id) => {
+    const deleteUser= async(e, email) => {
         // console.log(_id);
         if(window.confirm('Are you sure you want to delete this user')){
             try{
-                const {data} = await axios.delete(`/api/delete`);
+                const { data } = await axios.delete(`/api/user/delete`, { email: { email } });
+                // const {data} = await axios.delete(`/api/delete/post/${_id}`);
                 if(data.success === true){
                     toast.success(data.message);
                     displayUsers();
@@ -80,11 +76,11 @@ const UsersList = () => {
 
 
     //show a user
-    const showUser= async(e, _id) => {
+    const showUser= async(e, email) => {
         // console.log(_id);
         setLoading(true);
         try{
-            const {data} = await axios.get(`/api/me`);
+            const {data} = await axios.get(`/api/users`,{ email: { email } });
             if(data.success === true){
                 toast.success(data.user);
                 setUsers(data.users);
@@ -126,15 +122,15 @@ const UsersList = () => {
             field: 'profilePicture',
             headerName: 'Profile Picture',
             width: 150,
-            renderCell: (params) => ( params.row.image && params.row.image.url ?
-                <img width="40%" src={params.row.image.url} alt="" /> : null)
+            renderCell: (params) => ( params.row.profilePicture && params.row.profilePicture.url ?
+                <img width="40%" src={params.row.profilePicture.url} alt="" /> : null)
         },
         {
             field: 'date',
-            headerName: 'Create Date',
+            headerName: 'Created Date',
             width: 150,
             renderCell: (params) => (
-                moment(params.row.date).format('YYYY-MM-DD HH:MM:SS')
+                moment(params.row.date).format('MMM DD, YYYY')
             )
         },
         {
@@ -142,17 +138,17 @@ const UsersList = () => {
         width: 100,
         renderCell: (value) => (
             <Box sx={{display: 'flex', justifyContent: 'space-between', width: '170px'}}>
-                <Link to={`/admin/user/edit/${value.row._id}`}>
+                <Link to={`/admin/user/edit/${value.row.email}`}>
                     <IconButton aria-label="edit">
                         <EditIcon  sx={{color: '#1976d2'}} />
                     </IconButton>
                 </Link>
-                <IconButton aria-label="delete" onClick={(e) => deleteUserById(e, value.row._id)}>
+                <IconButton aria-label="delete" onClick={(e) => deleteUser(e, value.row.email)}>
                     <DeleteIcon sx={{color: "red"}} />
                 </IconButton>
-                <IconButton aria-label="show" onClick={(e) => showUser(e, value.row._id)}>
+                {/* <IconButton aria-label="show" onClick={(e) => showUser(e, value.row.email)}>
                     <PeoplesIcon sx={{color: "blue"}} />
-                </IconButton>
+                </IconButton> */}
             </Box>
             
         )
@@ -166,20 +162,20 @@ const UsersList = () => {
     return(
         <>
             <Box>
-
+                {/* <Profile /> */}
                 <Typography variant="h4" sx={{color: 'black', pb: 3}}>
                     Users
                 </Typography>
                 {/* <Box sx={{pb:2, display: 'flex', justifyContent: 'right'}}>
                     <Button variant="contained" color='success' startIcon={<AddIcon />}>
-                        <Link style={{color: 'white', textDecoration: 'none'}} to='/admin/user/create'>
-                            Create Post
+                        <Link style={{color: 'white', textDecoration: 'none'}} to='/admin/user/profile'>
+                            About Profile
                         </Link>
                     </Button>
                 </Box> */}
                 <Paper sx={{bgcolor:'white'}}>
                     <Box sx={{height: 400, width: '100%'}}>
-                        {loading? ( <div>Loading...</div>) :(
+                        {loading? <Loader />:(
                         <DataGrid getRowId={(row) => row._id || row.id} 
                             sx={{
                                 '& .MuiTablePagination-displayedRow': {

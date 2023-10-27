@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,20 +13,35 @@ import MenuItem from '@mui/material/MenuItem';
 import HouseIcon from '@mui/icons-material/House';
 import PeoplesIcon from '@mui/icons-material/PeopleSharp'
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-
-//const [user, setUser] = useState([]);
-const [user, setUser] = useState({});
-const [email, setEmail] = useState('');
-const [name, setName] = useState('');
-const [profilePicture, setProfilePicture] = useState(null);
 
 
 const pages = ['Home','Name','Email','Profile Picture',];
 
 const Profile = () => {
+  //const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  
+  useEffect(() => {
+    // Fetch the profile data from an API
+    fetch('/api/me')
+      .then((response) => response.json())
+      .then((data) => {
+        setName(data.user.name);
+        setEmail(data.user.email);
+        setProfilePicture(data.user.profilePicture);
+      })
+      .catch((error) => {
+        console.error('Error fetching profile data:', error);
+      });
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -42,11 +57,13 @@ const Profile = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const openProfilePicture = () => {
+    window.open(profilePicture.url, '_blank');
+  };
 
   // const createProfilePicture= async(e, id) => {
     //console.log(id)
-    const createProfilePicture = async (e, id) => {
+    const createProfilePicture = async (e, email) => {
       e.preventDefault();
       const formData = new FormData();
       formData.append('profilePicture', profilePicture);
@@ -59,7 +76,6 @@ const Profile = () => {
         });
         if (response.data.success) {
           toast.success(response.data.message);
-          displayPost();
         }
       } catch (error) {
         console.log(error);
@@ -78,7 +94,7 @@ const Profile = () => {
         //     toast.error(error);
         // }
     // }
-  }
+
 
   return (
     <AppBar position="static">
@@ -101,7 +117,7 @@ const Profile = () => {
               textDecoration: 'none',
             }}
           >
-            {name}  {email}
+            {name}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -143,7 +159,7 @@ const Profile = () => {
               ))}
            </Menu>
         </Box>
-          <PeoplesIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <PeoplesIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -160,7 +176,7 @@ const Profile = () => {
               textDecoration: 'none',
             }}
           >
-            {name}  {email}
+            {name}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {/* menu desktop */}
@@ -190,16 +206,19 @@ const Profile = () => {
             </Box>
 
         <Box sx={{ flexGrow: 0 }}>
+            {email}
             <Tooltip title="Open settings">
               <IconButton 
                 onClick={handleOpenUserMenu}          
-                sx={{ p: 0 }}>
+                sx={{ p: 0,mr:1 }}>
+                  {/* {email} */}
                 { profilePicture?(
-                  <Avatar alt="Profile Picture" src={profilePicture} />) : 
+                  <Avatar alt="Profile Picture" src={profilePicture.url} />) : 
                 (<Avatar alt="" src="" />)}
+                
               </IconButton>
             </Tooltip>
-           
+            
 
             <Menu
               sx={{ mt: '45px' }}
@@ -219,7 +238,7 @@ const Profile = () => {
             >
 
               <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center" onClick={(e) => createProfilePicture(e, value.row._id)}>
+                <Typography textAlign="center" onClick={(e) => createProfilePicture(e, )}>
                 {/* <Typography textAlign="center" onClick={createProfilePicture}></Typography> */}
                     Create Profile Picture
                     {/* <Link style={{textDecoration: "none"}} to="/admin/dashboard">Create Profile_picture</Link> */}
@@ -229,13 +248,13 @@ const Profile = () => {
 
                <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center">
-                    <Link style={{textDecoration: "none"}} to="/admin/dashboard">Edit Profile</Link>
+                    <Link style={{textDecoration: "none"}} to="/dashboard/editUser">Edit Profile</Link>
                 </Typography>
               </MenuItem> 
 
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center">
-                    <Link style={{textDecoration: "none"}} to="/user/profile">Delete Profile_picture</Link>
+                    <Link style={{textDecoration: "none"}} to="/profile/delete">Delete Profile_picture</Link>
                 </Typography>
               </MenuItem>
 
@@ -252,4 +271,5 @@ const Profile = () => {
     </AppBar>
   );
 }
+
 export default Profile;

@@ -16,7 +16,9 @@ const reducer= combineReducers({
     //emailConfirmation: userReducerEmailConfirmation
 });
 
-//const token =localStorage.getItem('authToken');
+// const token =localStorage.getItem('token');
+// const token =Cookies.getItem('token');
+// console.log("token",token)
 
 //initial state
 const initialState = {
@@ -24,9 +26,9 @@ const initialState = {
         userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
     }
 
-    //signIn: {
-        //userInfo: token ? {token} : null
-    //}
+    // signIn: {
+    //     userInfo: token ? {token} : null
+    // }
 }
 
 const middleware = [thunk];

@@ -2,6 +2,7 @@ import { Box} from "@mui/material";
 import React, { useState } from "react";
 import SidebarAdm from './Sidebar';
 import Top from './HeaderTop'
+import Profile from "../../pages/Profile";
 
 
 
@@ -14,6 +15,7 @@ const Layout= (Component) => ({...props}) => {
 
     return(
         <>
+            {/* <Profile /> */}
             <div style={{display:'flex', minHeight: "100vh"}}>
                 {/* <SidebarAdm showSidebar={showSidebar} /> */}
                 <SidebarAdm />
