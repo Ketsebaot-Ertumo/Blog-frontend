@@ -140,7 +140,7 @@ const Navbar = () => {
             <Typography 
               onClick={handleCloseNavMenu} 
               sx={{ my: 2, color: 'white', display: 'block' }}>
-                <Link to="/Signin" style={{color: 'white', textDecoration: "none"}}>
+                <Link to="/Login" style={{color: 'white', textDecoration: "none"}}>
                   LogIn
                 </Link>
             </Typography>

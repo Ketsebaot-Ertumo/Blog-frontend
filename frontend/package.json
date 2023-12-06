@@ -66,8 +66,8 @@
   "devDependencies": {
     "tailwindcss": "^3.3.2"
   },
-  "main": "index.js",
+  "main": "App.js",
   "license": "MIT",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "author": ""
+  "author": "Ketsebaot_Ertumo"
 }

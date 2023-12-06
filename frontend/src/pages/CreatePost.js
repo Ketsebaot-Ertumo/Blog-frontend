@@ -10,6 +10,7 @@ import "react-quill/dist/quill.snow.css";
 import {modules}  from '../components/moduleToolbar';
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 // import dataUriToFile from 'data-uri-to-file';
 
 
@@ -31,6 +32,7 @@ const CreatePost = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate= useNavigate();
+    const {isAuthenticated, userInfo}= useSelector(state=> state.signIn);
 
 
         const createNewPost = async(values) => {
@@ -65,7 +67,8 @@ const CreatePost = () => {
                 toast.success('post created successfully!');
                 const userInfoObject = JSON.parse(localStorage.getItem('userInfo'));
                 // console.log(userInfoObject);
-                if(userInfoObject.role === 'user'){
+                if(userInfo.role === 'user'){
+                // if(userInfoObject.role === 'user'){
                 navigate('/user/userProfile')}
                 else{
                 navigate('/admin/dashboard')}
